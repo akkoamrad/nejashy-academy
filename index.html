@@ -4,238 +4,264 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nejashy Academy</title>
-<meta name="theme-color" content="#000000">
+<meta name="description" content="Nejashy Academy: lessons from your teachers and the Math Arena.">
+<meta name="theme-color" content="#0b2a6b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#000;--panel:#03100a;--panel2:#06180e;--line:#0f4a22;--line2:#1b7a3a;
-  --g:#00ff41;--g2:#7dffa6;--txt:#c9ffd8;--dim:#5fbf80;--red:#ff4d5e;--amber:#ffc94d;
-  --r:10px;color-scheme:dark;
+  --bg:#f5f8ff;--paper:#fff;--ink:#0b1f4b;--navy:#0b2a6b;--blue:#1d4ed8;--blue2:#3b82f6;--sky:#e8f0ff;--sky2:#d4e3ff;
+  --line:#dbe5fa;--line2:#b9cdf5;--dim:#5a6a8e;--red:#d92d3a;--amber:#c97a06;--gold:#f2b705;--green:#0f9d58;
+  --r:16px;color-scheme:light;
+  --sans:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
-  --display:"Space Grotesk","JetBrains Mono",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(11,42,107,.06),0 12px 32px -12px rgba(11,42,107,.18);
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font:400 16px/1.65 var(--mono);min-height:100vh;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans);min-height:100vh;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(900px 500px at 85% -10%,rgba(0,255,65,.10),transparent 60%),
-    radial-gradient(700px 500px at -10% 110%,rgba(0,255,65,.07),transparent 60%),
-    linear-gradient(rgba(0,255,65,.035) 1px,transparent 1px) 0 0/100% 32px,
-    linear-gradient(90deg,rgba(0,255,65,.035) 1px,transparent 1px) 0 0/32px 100%}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:70;background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px)}
-h1,h2,h3{color:var(--g);line-height:1.12;font-family:var(--display);letter-spacing:-.01em;text-shadow:0 0 14px rgba(0,255,65,.35)}
+    radial-gradient(900px 520px at 92% -12%,rgba(59,130,246,.16),transparent 62%),
+    radial-gradient(700px 520px at -12% 112%,rgba(29,78,216,.10),transparent 60%),
+    linear-gradient(rgba(29,78,216,.045) 1px,transparent 1px) 0 0/100% 28px,
+    linear-gradient(90deg,rgba(29,78,216,.045) 1px,transparent 1px) 0 0/28px 100%}
+h1,h2,h3{color:var(--navy);line-height:1.08;font-family:var(--display);letter-spacing:-.02em}
 button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 button:disabled{cursor:not-allowed;opacity:.55}
-:focus-visible{outline:2px solid var(--g);outline-offset:3px}
+:focus-visible{outline:3px solid var(--blue2);outline-offset:3px;border-radius:6px}
 [hidden]{display:none!important}
-.blink,.cur::after{animation:blink 1s steps(1) infinite}
-.cur::after{content:"_"}
-.blink{font-style:normal}
+.blink{animation:blink 1s steps(1) infinite;font-style:normal}
 @keyframes blink{50%{opacity:0}}
 @keyframes in{from{opacity:0;transform:translateY(12px)}}
 @keyframes spin{to{transform:rotate(360deg)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;background:var(--g);color:#001a08;font-weight:800;padding:.7em 1.35em;border-radius:8px;text-decoration:none;transition:box-shadow .15s,transform .15s,background .15s;white-space:nowrap}
-.btn:hover:not(:disabled){box-shadow:0 0 24px rgba(0,255,65,.6);transform:translateY(-2px)}
-.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--g)}
-.btn.ghost:hover:not(:disabled){background:rgba(0,255,65,.07)}
-.btn.sm{padding:.35em .85em;font-size:.85rem;border-radius:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;background:var(--blue);color:#fff;font-weight:700;padding:.72em 1.35em;border-radius:12px;text-decoration:none;transition:box-shadow .15s,transform .15s,background .15s;white-space:nowrap;box-shadow:0 6px 16px -6px rgba(29,78,216,.6)}
+.btn:hover:not(:disabled){background:#1a43bd;transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(29,78,216,.7)}
+.btn:active:not(:disabled){transform:translateY(0)}
+.btn.ghost{background:var(--paper);border:1.5px solid var(--line2);color:var(--blue);box-shadow:none}
+.btn.ghost:hover:not(:disabled){background:var(--sky);border-color:var(--blue2)}
+.btn.sm{padding:.4em .9em;font-size:.86rem;border-radius:9px}
 .btn.lg{padding:.9em 1.7em;font-size:1.05rem}
-.btn.red{background:var(--red);color:#1a0000}
+.btn.red{background:var(--red);box-shadow:none}
+.btn.red:hover:not(:disabled){background:#b51f2b}
 .btn.wide{width:100%}
+.btn.icon{padding:.6em;border-radius:50%;width:46px;height:46px}
 .spin{width:1em;height:1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
 
 /* ===== Intro ===== */
-#intro{position:fixed;inset:0;z-index:50;background:#000;display:grid;place-items:center;text-align:left;padding:24px;transition:opacity 1s,visibility 1s}
+#intro{position:fixed;inset:0;z-index:50;background:var(--navy);display:grid;place-items:center;padding:24px;transition:opacity .9s,visibility .9s}
 #intro.out{opacity:0;visibility:hidden}
-#rain{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
-.intro-in{position:relative;padding:40px 28px;background:radial-gradient(closest-side,rgba(0,0,0,.92) 60%,transparent);max-width:100%}
-#boot{color:var(--dim);font-size:.9rem;white-space:pre;min-height:4.8em}
-.l1{font-size:clamp(1.3rem,5vw,2.2rem);color:var(--txt);margin-top:18px;min-height:1.4em}
-.l2{font-size:clamp(2rem,9vw,5rem);font-weight:800;color:var(--g);text-shadow:0 0 24px rgba(0,255,65,.7);line-height:1.1;min-height:1.2em;word-break:break-word}
-#enter{margin-top:28px;visibility:hidden}
+#rain{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.intro-in{position:relative;padding:40px 28px;background:radial-gradient(closest-side,rgba(11,42,107,.95) 60%,transparent);max-width:100%;color:#fff}
+#boot{color:#9dbcff;font:500 .9rem/1.6 var(--mono);white-space:pre;min-height:4.8em}
+.l1{font:500 clamp(1.3rem,5vw,2.2rem) var(--display);color:#dbe7ff;margin-top:18px;min-height:1.4em}
+.l2{font:800 clamp(2rem,9vw,5rem)/1.1 var(--display);color:#fff;min-height:1.2em;word-break:break-word;letter-spacing:-.03em}
+#enter{margin-top:28px;visibility:hidden;background:#fff;color:var(--navy)}
+#enter:hover{background:var(--sky)}
 #enter.show{visibility:visible;animation:in .6s}
-#skip{position:fixed;right:18px;bottom:18px;z-index:55}
+#skip{position:fixed;right:18px;bottom:18px;z-index:55;background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
 #intro.out ~ #skip{display:none}
 
 /* ===== Layout ===== */
-header{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.hwrap{max-width:1100px;margin:auto;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding:12px 5vw}
-.brand{font-weight:800;font-size:1.1rem;color:var(--g);text-shadow:0 0 10px rgba(0,255,65,.5);display:flex;align-items:center;gap:10px}
-.logo{width:30px;height:30px;border-radius:7px;border:1px solid var(--g);display:grid;place-items:center;font-size:.8rem;box-shadow:inset 0 0 12px rgba(0,255,65,.3)}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1120px;margin:auto;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding:12px 5vw}
+.brand{font:800 1.15rem var(--display);color:var(--navy);display:flex;align-items:center;gap:10px;letter-spacing:-.02em}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--blue2),var(--navy));color:#fff;display:grid;place-items:center;font-size:1rem;box-shadow:0 6px 14px -6px rgba(29,78,216,.8)}
 nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
-nav button{padding:.4em .85em;border-radius:6px;color:var(--dim);transition:color .15s,background .15s}
-nav button:hover{color:var(--g)}
-nav button.on{background:var(--panel2);color:var(--g);box-shadow:inset 0 0 0 1px var(--line2)}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:3px 12px 3px 3px;border-radius:99px;border:1px solid var(--line2);font-size:.85rem;color:var(--g);font-weight:700;margin-left:6px}
-.chip img{width:28px;height:28px;border-radius:50%;object-fit:cover}
-main{padding:0 5vw 90px;max-width:1100px;margin:auto}
+nav button{padding:.42em .95em;border-radius:99px;color:var(--dim);font-weight:600;transition:color .15s,background .15s}
+nav button:hover{color:var(--blue);background:var(--sky)}
+nav button.on{background:var(--blue);color:#fff}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:3px 12px 3px 3px;border-radius:99px;border:1.5px solid var(--line2);font-size:.88rem;color:var(--navy);font-weight:700;margin-left:6px;background:#fff}
+.chip:hover{border-color:var(--blue2)}
+.chip img,.chip .av{width:28px;height:28px;font-size:.8rem}
+main{padding:0 5vw 90px;max-width:1120px;margin:auto}
 .view{padding-top:44px;animation:in .4s}
-footer{border-top:1px solid var(--line);padding:26px 5vw;text-align:center;color:var(--dim);font-size:.85rem}
+footer{border-top:1px solid var(--line);padding:26px 5vw;text-align:center;color:var(--dim);font-size:.88rem;background:#fff}
 
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:26px;margin-top:20px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
-.kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-h2{font-size:clamp(1.8rem,5vw,2.6rem);margin:4px 0 8px}
-h3{font-size:1.25rem}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:26px;margin-top:20px;box-shadow:var(--shadow)}
+.kicker{font:700 .74rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+h2{font-size:clamp(2rem,5vw,2.8rem);margin:6px 0 8px}
+h3{font-size:1.3rem}
 .muted{color:var(--dim)}
-input[type=text],input[type=password],input[type=number],textarea,input[type=file]{width:100%;font:inherit;padding:.75em 1em;border-radius:8px;border:1px solid var(--line);background:#000;color:var(--g);caret-color:var(--g);transition:border-color .15s,box-shadow .15s}
-input:focus,textarea:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(0,255,65,.15)}
-label{display:block;font-weight:700;margin:16px 0 6px}
-.fb{min-height:1.6em;margin-top:12px;font-weight:700}
-.good{color:var(--g)}.bad{color:var(--red)}.warn{color:var(--amber)}
+input[type=text],input[type=password],input[type=number],textarea,input[type=file]{width:100%;font:inherit;padding:.75em 1em;border-radius:12px;border:1.5px solid var(--line2);background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+input::placeholder,textarea::placeholder{color:#97a6c4}
+input:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(59,130,246,.18)}
+label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
+.fb{min-height:1.6em;margin-top:12px;font-weight:600}
+.good{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--amber)}
 
 /* ===== Home ===== */
-.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;padding:40px 0 20px}
-.hero h1{font-size:clamp(2.4rem,7vw,4.4rem);font-weight:700}
-.hero h1 span{display:block}
-.hero p{max-width:34em;margin:20px 0 28px;font-size:1.05rem}
-.term{background:#000;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;box-shadow:0 0 50px rgba(0,255,65,.12)}
-.term .bar3{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}
-.term .bar3 i{width:10px;height:10px;border-radius:50%;background:var(--line2)}
-.term pre{padding:18px;font:inherit;font-size:.9rem;color:var(--g2);white-space:pre-wrap;min-height:220px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:40px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;text-align:left;transition:border-color .2s,transform .2s,box-shadow .2s}
-.card:hover{border-color:var(--g);transform:translateY(-3px);box-shadow:0 0 30px rgba(0,255,65,.15)}
-.card b{display:block;font-family:var(--display);color:var(--g);font-size:1.15rem;margin:10px 0 4px}
-.card .ic{font-size:1.4rem}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:44px;align-items:center;padding:40px 0 20px}
+.hero h1{font-size:clamp(2.6rem,7vw,4.8rem);font-weight:800;letter-spacing:-.035em}
+.hero h1 em{font-style:normal;color:var(--blue);position:relative;white-space:nowrap}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.02em;height:.16em;border-radius:99px;background:var(--sky2);z-index:-1}
+.hero p{max-width:34em;margin:20px 0 28px;font-size:1.1rem;color:#33456e}
+.term{background:var(--navy);border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -24px rgba(11,42,107,.55);transform:rotate(1.5deg)}
+.term .bar3{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.term .bar3 i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25)}
+.term .bar3 i:first-child{background:#fff}
+.term pre{padding:20px;font:500 .9rem/1.65 var(--mono);color:#cfe0ff;white-space:pre-wrap;min-height:230px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:44px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px;text-align:left;transition:border-color .2s,transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
+.card:hover{border-color:var(--blue2);transform:translateY(-4px)}
+.card b{display:block;font-family:var(--display);color:var(--navy);font-size:1.2rem;margin:12px 0 4px}
+.card .ic{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--sky);font-size:1.3rem}
 @media(max-width:760px){.hero{grid-template-columns:1fr}.term{display:none}}
 
 /* ===== Library ===== */
 .libbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:14px}
 .libbar input{max-width:340px}
 .files{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:20px}
-.file{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;animation:in .4s both;transition:border-color .2s,transform .2s}
-.file:hover{border-color:var(--line2);transform:translateY(-2px)}
-.thumb{height:150px;background:#000;display:grid;place-items:center;border-bottom:1px solid var(--line);overflow:hidden}
+.file{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;animation:in .4s both;transition:border-color .2s,transform .2s;box-shadow:var(--shadow)}
+.file:hover{border-color:var(--blue2);transform:translateY(-2px)}
+.thumb{height:150px;background:var(--sky);display:grid;place-items:center;border-bottom:1px solid var(--line);overflow:hidden}
 .thumb img,.thumb video{width:100%;height:100%;object-fit:cover}
-.thumb .ext{font-family:var(--display);font-size:2rem;font-weight:700;color:var(--g);border:1px solid var(--line2);border-radius:8px;padding:6px 14px}
+.thumb .ext{font:800 1.8rem var(--display);color:var(--blue);background:#fff;border:1.5px solid var(--line2);border-radius:12px;padding:6px 16px}
 .file .body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.file h3{font-size:1.08rem}
+.file h3{font-size:1.1rem}
 .file audio{width:100%}
 .file .row{margin-top:auto}
 .meta{font-size:.78rem;color:var(--dim);word-break:break-all}
-.empty{padding:34px;border:1px dashed var(--line2);border-radius:var(--r);margin-top:20px;text-align:center}
-.skel{height:240px;border-radius:var(--r);background:linear-gradient(90deg,var(--panel) 0%,var(--panel2) 50%,var(--panel) 100%) 0 0/200% 100%;animation:sk 1.2s linear infinite;border:1px solid var(--line)}
+.empty{padding:34px;border:2px dashed var(--line2);border-radius:var(--r);margin-top:20px;text-align:center;background:rgba(255,255,255,.6);color:var(--dim)}
+.skel{height:240px;border-radius:var(--r);background:linear-gradient(90deg,#fff 0%,var(--sky) 50%,#fff 100%) 0 0/200% 100%;animation:sk 1.2s linear infinite;border:1px solid var(--line)}
 @keyframes sk{to{background-position:-200% 0}}
 
 /* ===== Arena ===== */
 .arena{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:start}
 @media(max-width:860px){.arena{grid-template-columns:1fr}}
-.steps{display:flex;gap:8px;margin-bottom:6px;font-size:.78rem;color:var(--dim)}
-.steps span{padding:2px 10px;border:1px solid var(--line);border-radius:99px}
-.steps span.on{border-color:var(--g);color:var(--g)}
-.steps span.done{background:rgba(0,255,65,.12);color:var(--g);border-color:var(--line2)}
+.steps{display:flex;gap:8px;margin-bottom:10px;font-size:.78rem;color:var(--dim);flex-wrap:wrap}
+.steps span{padding:3px 12px;border:1.5px solid var(--line);border-radius:99px;font-weight:600}
+.steps span.on{border-color:var(--blue);color:var(--blue)}
+.steps span.done{background:var(--sky);color:var(--blue);border-color:var(--sky)}
 .namerow{display:flex;gap:10px}
 .namerow input{flex:1}
 
-.cam{position:relative;width:100%;max-width:360px;aspect-ratio:1;margin:16px auto 0;border-radius:50%;overflow:hidden;background:#000;border:2px solid var(--line2);box-shadow:0 0 40px rgba(0,255,65,.18)}
-.cam video,.cam img{width:100%;height:100%;object-fit:cover}
-.cam video{transform:scaleX(-1)}
-.cam .ring{position:absolute;inset:8%;border:2px dashed rgba(0,255,65,.45);border-radius:50%;pointer-events:none}
-.cam .count{position:absolute;inset:0;display:grid;place-items:center;font:800 6rem var(--display);color:var(--g);text-shadow:0 0 30px var(--g);background:rgba(0,0,0,.25)}
+/* Selfie studio */
+.src{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.src button{border:1.5px solid var(--line2);border-radius:14px;padding:18px 12px;text-align:center;font-weight:700;color:var(--navy);background:#fff;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.src button span{font-size:1.6rem}
+.src button small{font-weight:500;color:var(--dim);font-size:.8rem}
+.src button:hover{border-color:var(--blue);background:var(--sky);transform:translateY(-2px)}
+.cam{position:relative;width:100%;max-width:340px;aspect-ratio:1;margin:18px auto 0;border-radius:50%;overflow:hidden;background:var(--sky);border:4px solid #fff;box-shadow:0 0 0 2px var(--line2),0 18px 40px -16px rgba(11,42,107,.45);touch-action:none}
+.cam video,.cam canvas{width:100%;height:100%;object-fit:cover;display:block}
+.cam video{transform-origin:center}
+.cam canvas{cursor:grab}
+.cam canvas:active{cursor:grabbing}
+.cam .ring{position:absolute;inset:8%;border:2px dashed rgba(255,255,255,.8);border-radius:50%;pointer-events:none}
+.cam .count{position:absolute;inset:0;display:grid;place-items:center;font:800 6rem var(--display);color:#fff;text-shadow:0 4px 30px rgba(11,42,107,.6);background:rgba(11,42,107,.25)}
 .cam .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
 .cam .flash.go{animation:camflash .5s}
-@keyframes camflash{0%{opacity:.9}100%{opacity:0}}
-.cam .scan{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.55);color:var(--g);font-weight:700;text-align:center;padding:20px}
-.cam .scan::before{content:"";position:absolute;left:0;right:0;height:3px;background:var(--g);box-shadow:0 0 20px var(--g);animation:scan 1.4s ease-in-out infinite alternate}
-@keyframes scan{from{top:10%}to{top:90%}}
-.cam .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--dim);padding:30px;font-size:.9rem}
+@keyframes camflash{0%{opacity:.95}100%{opacity:0}}
+.cam .scan{position:absolute;inset:0;display:grid;place-items:center;background:rgba(11,42,107,.6);color:#fff;font-weight:700;text-align:center;padding:30px}
+.cam .scan::before{content:"";position:absolute;left:0;right:0;height:3px;background:#fff;box-shadow:0 0 20px #9dbcff;animation:scan 1.4s ease-in-out infinite alternate}
+@keyframes scan{from{transform:translateY(-120px)}to{transform:translateY(120px)}}
+.cam .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--dim);padding:40px;font-size:.92rem}
+.camtools{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:14px}
+.tool{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line2);border-radius:99px;padding:.35em .9em;font-size:.85rem;font-weight:600;color:var(--navy);background:#fff}
+.tool:hover{border-color:var(--blue2);background:var(--sky)}
+.tool[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.zoom{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:12px;font-size:.85rem;color:var(--dim)}
+.zoom input{width:170px;accent-color:var(--blue)}
 .tips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px;font-size:.78rem;color:var(--dim)}
-.tips span{border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+.tips span{background:var(--sky);border-radius:99px;padding:2px 10px}
 .camctl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
 
-.player{display:flex;align-items:center;gap:18px;padding:16px;border:1px solid var(--line2);border-radius:var(--r);background:rgba(0,255,65,.04);margin-top:14px;animation:in .4s}
-.player img{width:84px;height:84px;border-radius:50%;object-fit:cover;border:2px solid var(--g);box-shadow:0 0 22px rgba(0,255,65,.35);flex:none}
-.player b{display:block;font-family:var(--display);font-size:1.4rem;color:var(--g);word-break:break-word}
-.linkbtn{color:var(--dim);text-decoration:underline;font-size:.85rem;padding:0}
-.linkbtn:hover{color:var(--g)}
+.player{display:flex;align-items:center;gap:18px;padding:16px;border-radius:var(--r);background:linear-gradient(135deg,var(--sky),#fff);border:1px solid var(--line);margin-top:14px;animation:in .4s}
+.player img{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 0 0 2px var(--blue2);flex:none}
+.player b{display:block;font:800 1.5rem var(--display);color:var(--navy);word-break:break-word}
+.linkbtn{color:var(--blue);text-decoration:underline;text-underline-offset:3px;font-size:.86rem;padding:0;font-weight:600}
+.linkbtn:hover{color:var(--navy)}
+.links{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px}
 
 .lv{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 4px}
-.lv button{border:1px solid var(--line);padding:.7em .5em;border-radius:8px;font-weight:700;color:var(--dim);text-align:center;line-height:1.3;transition:all .15s}
-.lv button small{display:block;font-weight:400;font-size:.72rem}
-.lv button.on{border-color:var(--g);color:var(--g);box-shadow:0 0 16px rgba(0,255,65,.3);background:rgba(0,255,65,.06)}
+.lv button{border:1.5px solid var(--line2);padding:.75em .5em;border-radius:12px;font-weight:700;color:var(--navy);text-align:center;line-height:1.3;transition:all .15s;background:#fff}
+.lv button small{display:block;font-weight:500;font-size:.74rem;color:var(--dim)}
+.lv button:hover{border-color:var(--blue2)}
+.lv button.on{border-color:var(--blue);background:var(--blue);color:#fff}
+.lv button.on small{color:#dbe7ff}
 
-.hud{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-weight:700}
+.hud{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-weight:700;color:var(--navy)}
 .hud .me{display:flex;align-items:center;gap:10px}
-.hud .me img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid var(--g)}
-.pill{border:1px solid var(--line2);border-radius:99px;padding:2px 12px;font-size:.85rem}
-.bar{height:10px;background:#000;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin:14px 0}
-.bar i{display:block;height:100%;width:100%;background:var(--g);transform-origin:left;box-shadow:0 0 12px var(--g)}
+.hud .me img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--blue2)}
+.pill{background:var(--sky);color:var(--blue);border-radius:99px;padding:3px 12px;font-size:.86rem}
+.bar{height:10px;background:var(--sky);border-radius:99px;overflow:hidden;margin:14px 0}
+.bar i{display:block;height:100%;width:100%;background:var(--blue);transform-origin:left;border-radius:99px}
 .dots{display:flex;gap:6px;justify-content:center;margin-top:6px}
-.dots i{width:10px;height:10px;border-radius:50%;border:1px solid var(--line2)}
-.dots i.ok{background:var(--g);border-color:var(--g)}
+.dots i{width:11px;height:11px;border-radius:50%;border:2px solid var(--line2)}
+.dots i.ok{background:var(--blue);border-color:var(--blue)}
 .dots i.no{background:var(--red);border-color:var(--red)}
-.dots i.now{border-color:var(--g);box-shadow:0 0 8px var(--g)}
-.q{font-size:clamp(2.8rem,13vw,5.5rem);font-weight:800;font-family:var(--display);color:var(--g);text-shadow:0 0 20px rgba(0,255,65,.6);text-align:center;margin:20px 0;animation:pop .3s}
+.dots i.now{border-color:var(--blue);box-shadow:0 0 0 3px var(--sky2)}
+.q{font:800 clamp(2.8rem,13vw,5.5rem) var(--display);color:var(--navy);text-align:center;margin:20px 0;animation:pop .3s;letter-spacing:-.03em}
 @keyframes pop{from{transform:scale(.6);opacity:0}}
-#ans{font-size:2rem;text-align:center;max-width:260px;margin:auto;display:block;-moz-appearance:textfield}
+#ans{font-size:2rem;text-align:center;max-width:260px;margin:auto;display:block;-moz-appearance:textfield;font-weight:700}
 #ans::-webkit-inner-spin-button,#ans::-webkit-outer-spin-button{-webkit-appearance:none}
 #fb{text-align:center}
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-12px)}75%{transform:translateX(12px)}}
 .flashg{animation:flashg .6s}
-@keyframes flashg{30%{box-shadow:0 0 0 2px var(--g),0 0 40px rgba(0,255,65,.6)}}
-.big{font-size:4.5rem;font-weight:800;font-family:var(--display);line-height:1;color:var(--g);text-shadow:0 0 24px rgba(0,255,65,.7);text-align:center}
-.resme{display:block;width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid var(--g);margin:0 auto 14px;box-shadow:0 0 30px rgba(0,255,65,.4)}
+@keyframes flashg{30%{box-shadow:0 0 0 3px var(--blue2),0 20px 50px -10px rgba(29,78,216,.5)}}
+.big{font:800 4.8rem/1 var(--display);color:var(--blue);text-align:center;letter-spacing:-.04em}
+.resme{display:block;width:100px;height:100px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 0 0 2px var(--blue2);margin:0 auto 14px}
 
 .flt{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-.flt button{border:1px solid var(--line);padding:.25em .8em;border-radius:99px;color:var(--dim);font-size:.82rem}
-.flt button.on{border-color:var(--g);color:var(--g);background:rgba(0,255,65,.06)}
+.flt button{border:1.5px solid var(--line2);padding:.25em .85em;border-radius:99px;color:var(--dim);font-size:.84rem;font-weight:600}
+.flt button.on{border-color:var(--blue);color:#fff;background:var(--blue)}
 .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:8px;margin:18px 0 8px;text-align:center}
 .podium div{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
 .podium .av{width:58px;height:58px}
-.podium .p1 .av{width:76px;height:76px;border-color:var(--amber);box-shadow:0 0 22px rgba(255,201,77,.45)}
-.podium .nm{font-weight:700;font-size:.85rem;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.podium .sc{color:var(--g);font-weight:800}
-.podium .base{width:100%;border:1px solid var(--line2);border-bottom:0;border-radius:8px 8px 0 0;background:rgba(0,255,65,.06);font-family:var(--display);font-weight:700;color:var(--g)}
-.podium .p1 .base{height:70px;padding-top:14px;color:var(--amber)}
+.podium .p1 .av{width:76px;height:76px;border:3px solid var(--gold)}
+.podium .nm{font-weight:700;font-size:.86rem;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.podium .sc{color:var(--blue);font-weight:800}
+.podium .base{width:100%;border-radius:10px 10px 0 0;background:var(--sky);font:800 1.1rem var(--display);color:var(--blue)}
+.podium .p1 .base{height:70px;padding-top:14px;background:var(--blue);color:#fff}
 .podium .p2 .base{height:52px;padding-top:10px}
 .podium .p3 .base{height:38px;padding-top:6px}
 .board{list-style:none;padding:0}
-.board li{display:flex;gap:12px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--line);animation:in .35s both}
+.board li{display:flex;gap:12px;align-items:center;padding:9px 6px;border-bottom:1px solid var(--line);animation:in .35s both}
 .board li .rk{width:2.2em;flex:none;color:var(--dim);font-weight:700}
 .board .n{flex:1;font-weight:700;word-break:break-word;min-width:0}
-.board .s{font-weight:800;color:var(--g)}
-.board li.me{background:rgba(0,255,65,.07);border-radius:6px}
-.av{width:36px;height:36px;border-radius:50%;object-fit:cover;flex:none;border:1px solid var(--line2);background:#000;display:grid;place-items:center;font-weight:800;color:var(--g);font-family:var(--display)}
-.tag{font-size:.72rem;border:1px solid var(--line);padding:1px 8px;border-radius:99px;color:var(--dim)}
+.board .s{font-weight:800;color:var(--blue)}
+.board li.me{background:var(--sky);border-radius:10px}
+.av{width:36px;height:36px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px var(--line2);background:var(--sky);display:grid;place-items:center;font-weight:800;color:var(--blue);font-family:var(--display)}
+.tag{font-size:.72rem;background:var(--sky);padding:1px 8px;border-radius:99px;color:var(--blue);font-weight:600}
 
 /* ===== Admin ===== */
 .players{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:14px}
-.players div{border:1px solid var(--line);border-radius:var(--r);padding:12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
-.players img{width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--line2)}
-.players b{font-size:.85rem;word-break:break-word}
+.players div{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.players img,.players .av{width:72px;height:72px;font-size:1.6rem}
+.players b{font-size:.86rem;word-break:break-word}
 
 #conf{position:fixed;inset:0;pointer-events:none;z-index:60}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}.blink,.cur::after{animation:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}.blink{animation:none!important}}
 </style>
 </head>
 <body>
 
 <div id="intro">
-  <canvas id="rain"></canvas>
+  <canvas id="rain" aria-hidden="true"></canvas>
   <div class="intro-in">
     <div id="boot"></div>
     <div class="l1"><span id="t1"></span><i class="blink" id="c1">_</i></div>
     <div class="l2"><span id="t2"></span><i class="blink" id="c2" hidden>_</i></div>
-    <button class="btn" id="enter">[ enter ]</button>
+    <button class="btn" id="enter">Enter</button>
   </div>
 </div>
-<button class="btn ghost sm" id="skip">skip</button>
+<button class="btn ghost sm" id="skip">Skip</button>
 
 <header>
   <div class="hwrap">
-    <button class="brand" data-v="home"><span class="logo">N</span>nejashy_academy<i class="blink">_</i></button>
-    <nav>
-      <button data-v="home">home</button>
-      <button data-v="library">library</button>
-      <button data-v="arena">math arena</button>
-      <button data-v="admin">admin</button>
+    <button class="brand" data-v="home"><span class="logo">N</span>Nejashy Academy</button>
+    <nav aria-label="Main">
+      <button data-v="home">Home</button>
+      <button data-v="library">Library</button>
+      <button data-v="arena">Math Arena</button>
+      <button data-v="admin">Admin</button>
       <span id="chip"></span>
     </nav>
   </div>
@@ -245,8 +271,8 @@ label{display:block;font-weight:700;margin:16px 0 6px}
   <section class="view" id="home">
     <div class="hero">
       <div>
-        <div class="kicker">// welcome, student</div>
-        <h1>Learn together.<span class="cur">Count faster.</span></h1>
+        <div class="kicker">Welcome, student</div>
+        <h1>Learn together. <em>Count faster.</em></h1>
         <p>Welcome to Nejashy Academy. Find lessons and files from your teachers in the Library, then make your player with a selfie and race your classmates in the Math Arena.</p>
         <div class="row">
           <button class="btn lg" data-v="arena">Play the Math Arena</button>
@@ -260,14 +286,14 @@ label{display:block;font-weight:700;margin:16px 0 6px}
     </div>
     <div class="cards">
       <button class="card" data-v="library"><span class="ic">📚</span><b>Library</b><span class="muted">Worksheets, videos and notes shared by your teachers.</span></button>
-      <button class="card" data-v="arena"><span class="ic">📸</span><b>Your player</b><span class="muted">Snap a selfie once. It becomes your picture every time you play.</span></button>
+      <button class="card" data-v="arena"><span class="ic">📸</span><b>Your player</b><span class="muted">Take a selfie or upload a photo once. It becomes your picture every time you play.</span></button>
       <button class="card" data-v="arena"><span class="ic">🏆</span><b>Leaderboard</b><span class="muted">Answer fast, build streaks and climb to the top three.</span></button>
     </div>
   </section>
 
   <section class="view" id="library" hidden>
-    <div class="kicker">// shared files</div>
-    <h2 class="cur">Library</h2>
+    <div class="kicker">Shared files</div>
+    <h2>Library</h2>
     <div class="libbar">
       <p class="muted">Files shared by your teachers.</p>
       <input type="text" id="libSearch" placeholder="Search files..." aria-label="Search files">
@@ -276,15 +302,15 @@ label{display:block;font-weight:700;margin:16px 0 6px}
   </section>
 
   <section class="view" id="arena" hidden>
-    <div class="kicker">// 10 questions · 15 seconds each</div>
-    <h2 class="cur">Math Arena</h2>
+    <div class="kicker">10 questions · 15 seconds each</div>
+    <h2>Math Arena</h2>
     <p class="muted">Faster answers and streaks score more points.</p>
 
     <div class="arena">
       <div>
         <!-- Step 1: name -->
         <div class="panel" id="stepName">
-          <div class="steps"><span class="on">1 · name</span><span>2 · selfie</span><span>3 · play</span></div>
+          <div class="steps"><span class="on">1 · Name</span><span>2 · Photo</span><span>3 · Play</span></div>
           <form id="nameForm">
             <label for="pname">Your name</label>
             <div class="namerow">
@@ -292,38 +318,64 @@ label{display:block;font-weight:700;margin:16px 0 6px}
               <button class="btn" id="nameGo">Continue</button>
             </div>
           </form>
-          <div class="fb bad" id="nameErr"></div>
+          <div class="fb bad" id="nameErr" role="alert"></div>
         </div>
 
-        <!-- Step 2: selfie -->
+        <!-- Step 2: selfie studio -->
         <div class="panel" id="stepSelfie" hidden>
-          <div class="steps"><span class="done">1 · name</span><span class="on">2 · selfie</span><span>3 · play</span></div>
-          <h3>Hi <span id="selfieName"></span>, take a selfie</h3>
-          <p class="muted">It becomes your profile picture. Every time you type your name, this picture shows up. It has to be a real, live photo of your face.</p>
-          <div class="cam" id="cam">
-            <video id="video" playsinline muted autoplay hidden></video>
-            <img id="shot" alt="Your selfie" hidden>
-            <div class="ring" id="ring" hidden></div>
-            <div class="ph" id="camPh">Tap “Turn on camera” to begin.</div>
-            <div class="count" id="count" hidden></div>
-            <div class="scan" id="scan" hidden>Checking that it’s a real selfie...</div>
-            <div class="flash" id="camFlash"></div>
+          <div class="steps" id="selfieSteps"><span class="done">1 · Name</span><span class="on">2 · Photo</span><span>3 · Play</span></div>
+          <h3 id="selfieTitle"></h3>
+          <p class="muted" id="selfieIntro"></p>
+
+          <div class="src" id="srcPick">
+            <button id="pickCam"><span>📷</span>Use camera<small>Take a selfie now</small></button>
+            <button id="pickFile"><span>🖼️</span>Upload a photo<small>Choose one from your device</small></button>
           </div>
-          <div class="tips"><span>face the camera</span><span>good light</span><span>no hats or masks</span><span>just you</span></div>
-          <div class="camctl" id="camCtl"></div>
-          <div class="fb" id="camMsg" style="text-align:center"></div>
-          <div style="text-align:center;margin-top:6px"><button class="linkbtn" id="backName">use a different name</button></div>
+          <input type="file" id="fileIn" accept="image/*" class="sr" tabindex="-1" aria-hidden="true">
+
+          <div id="studio" hidden>
+            <div class="cam" id="cam">
+              <video id="video" playsinline muted autoplay hidden></video>
+              <canvas id="edit" width="512" height="512" hidden aria-label="Your photo. Drag to move it."></canvas>
+              <div class="ring" id="ring" hidden></div>
+              <div class="ph" id="camPh"></div>
+              <div class="count" id="count" hidden></div>
+              <div class="scan" id="scan" hidden>Checking your photo...</div>
+              <div class="flash" id="camFlash"></div>
+            </div>
+            <div class="zoom" id="zoomRow" hidden>
+              <span aria-hidden="true">−</span>
+              <input type="range" id="zoom" min="1" max="3" step="0.01" value="1" aria-label="Zoom">
+              <span aria-hidden="true">+</span>
+            </div>
+            <div class="camtools" id="camTools" hidden>
+              <button class="tool" id="flipCam" hidden>🔄 Switch camera</button>
+              <button class="tool" id="timerBtn" aria-pressed="true">⏱ 3s timer</button>
+            </div>
+            <p class="muted" id="dragHint" style="text-align:center;font-size:.85rem;margin-top:8px" hidden>Drag the photo to move it, and use the slider to zoom.</p>
+            <div class="tips"><span>face the camera</span><span>good light</span><span>no hats or masks</span><span>just you</span></div>
+            <div class="camctl" id="camCtl"></div>
+          </div>
+
+          <div class="fb" id="camMsg" style="text-align:center" role="status"></div>
+          <div class="links" style="justify-content:center;margin-top:6px">
+            <button class="linkbtn" id="cancelSelfie" hidden>Keep my current photo</button>
+            <button class="linkbtn" id="backName">Use a different name</button>
+          </div>
         </div>
 
         <!-- Step 3: ready -->
         <div class="panel" id="stepReady" hidden>
-          <div class="steps"><span class="done">1 · name</span><span class="done">2 · selfie</span><span class="on">3 · play</span></div>
+          <div class="steps"><span class="done">1 · Name</span><span class="done">2 · Photo</span><span class="on">3 · Play</span></div>
           <div class="player">
-            <img id="meImg" alt="">
+            <img id="meImg" alt="Your profile picture">
             <div>
               <span class="muted" id="meHello">Welcome back</span>
               <b id="meName"></b>
-              <button class="linkbtn" id="notMe">not you? change name</button>
+              <div class="links">
+                <button class="linkbtn" id="changePhoto" hidden>Change photo</button>
+                <button class="linkbtn" id="notMe">Not you? Change name</button>
+              </div>
             </div>
           </div>
           <label>Choose a level</label>
@@ -333,6 +385,7 @@ label{display:block;font-weight:700;margin:16px 0 6px}
             <button data-l="hard">Hard<small>× ÷ and big +</small></button>
           </div>
           <button class="btn lg wide" id="start" style="margin-top:18px">Start the race</button>
+          <div class="fb bad" id="startErr" role="alert"></div>
         </div>
 
         <!-- Game -->
@@ -343,9 +396,9 @@ label{display:block;font-weight:700;margin:16px 0 6px}
           </div>
           <div class="bar"><i id="tb"></i></div>
           <div class="dots" id="dots"></div>
-          <div class="q" id="q"></div>
+          <div class="q" id="q" aria-live="polite"></div>
           <form id="f"><input type="number" id="ans" inputmode="numeric" autocomplete="off" aria-label="Your answer"></form>
-          <div class="fb" id="fb"></div>
+          <div class="fb" id="fb" role="status"></div>
         </div>
 
         <!-- Result -->
@@ -361,10 +414,10 @@ label{display:block;font-weight:700;margin:16px 0 6px}
       <div class="panel">
         <h3>Top players</h3>
         <div class="flt" id="flt">
-          <button data-b="all" class="on">all</button>
-          <button data-b="easy">easy</button>
-          <button data-b="medium">medium</button>
-          <button data-b="hard">hard</button>
+          <button data-b="all" class="on">All</button>
+          <button data-b="easy">Easy</button>
+          <button data-b="medium">Medium</button>
+          <button data-b="hard">Hard</button>
         </div>
         <div id="podium"></div>
         <ol class="board" id="board"></ol>
@@ -376,8 +429,8 @@ label{display:block;font-weight:700;margin:16px 0 6px}
     <div id="adminBody"></div>
   </section>
 </main>
-<footer>nejashy_academy · learn together, count faster</footer>
-<canvas id="conf"></canvas>
+<footer>Nejashy Academy · learn together, count faster</footer>
+<canvas id="conf" aria-hidden="true"></canvas>
 
 <script>
 /* ===== API CONNECTION ===== */
@@ -433,6 +486,7 @@ function enter(){
 
 $("#enter").onclick = enter;
 $("#skip").onclick = enter;
+addEventListener("keydown", e => { if(e.key === "Escape") enter(); });
 
 async function typeTo(el, text, ms){
   for(const c of text){
@@ -442,7 +496,7 @@ async function typeTo(el, text, ms){
 }
 
 (async () => {
-  for(const line of ["> booting nejashy_academy","> loading library ... ok","> loading math_arena ... ok"]){
+  for(const line of ["> starting nejashy academy","> loading library ... ok","> loading math arena ... ok"]){
     $("#boot").textContent += line + "\n";
     await sleep(reduce ? 0 : 380);
   }
@@ -453,11 +507,11 @@ async function typeTo(el, text, ms){
   await typeTo($("#t2"), "Amir and Yehya", 110);
   await sleep(reduce ? 0 : 700);
   $("#enter").classList.add("show");
-  $("#enter").focus();
+  if(!entered) $("#enter").focus();
 })();
 
 (function rain(){
-  const c = $("#rain"), x = c.getContext("2d"), fs = 16, chars = "01abcdef$#<>/{}=+*";
+  const c = $("#rain"), x = c.getContext("2d"), fs = 16, chars = "0123456789+−×÷=";
   let cols, drops;
   const init = () => {
     c.width = innerWidth; c.height = innerHeight;
@@ -467,10 +521,11 @@ async function typeTo(el, text, ms){
   init();
   addEventListener("resize", init);
   (function draw(){
-    if(entered) return;
-    x.fillStyle = "rgba(0,0,0,.09)"; x.fillRect(0,0,c.width,c.height);
-    x.fillStyle = "#00ff41"; x.font = fs + "px monospace";
+    if(entered) return removeEventListener("resize", init);
+    x.fillStyle = "rgba(11,42,107,.12)"; x.fillRect(0,0,c.width,c.height);
+    x.font = fs + "px monospace";
     for(let i=0;i<cols;i++){
+      x.fillStyle = Math.random() > .9 ? "#ffffff" : "#6f9bff";
       x.fillText(chars[r(0,chars.length-1)], i*fs, drops[i]*fs);
       if(drops[i]*fs > c.height && Math.random() > .975) drops[i] = 0;
       drops[i]++;
@@ -491,13 +546,15 @@ async function termType(){
 }
 
 /* ===== Navigation ===== */
+let current = "home";
 function go(v){
+  if(current === "arena" && v !== "arena") leaveArena();
+  current = v;
   document.querySelectorAll(".view").forEach(s => s.hidden = s.id !== v);
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
   if(v === "library") renderLib($("#libList"), false);
   if(v === "arena") renderBoard();
   if(v === "admin") renderAdmin();
-  if(v !== "arena") stopCamera();
   scrollTo(0,0);
 }
 
@@ -515,8 +572,8 @@ async function renderLib(box, admin){
     libCache = await api("files");
     drawLib(box, admin, admin ? "" : $("#libSearch").value);
   } catch(err) {
-    box.innerHTML = `<div class="empty bad">Couldn’t load files: ${esc(err.message)}<br><button class="btn sm ghost" style="margin-top:12px" id="libRetry">Try again</button></div>`;
-    $("#libRetry").onclick = () => renderLib(box, admin);
+    box.innerHTML = `<div class="empty bad">Couldn’t load files: ${esc(err.message)}<br><button class="btn sm ghost" style="margin-top:12px" data-retry>Try again</button></div>`;
+    box.querySelector("[data-retry]").onclick = () => renderLib(box, admin);
   }
 }
 
@@ -533,7 +590,8 @@ function drawLib(box, admin, q = ""){
     const u = `${API}?action=download&id=${encodeURIComponent(f.id)}`;
     const t = f.type || "";
     const ext = (f.name.split(".").pop() || "file").slice(0,4).toUpperCase();
-    const pv = t.startsWith("image/") ? `<img src="${esc(u)}" alt="" loading="lazy">`
+    const safeImg = t.startsWith("image/") && !t.includes("svg");
+    const pv = safeImg ? `<img src="${esc(u)}" alt="" loading="lazy">`
       : t.startsWith("video/") ? `<video src="${esc(u)}" controls preload="metadata"></video>`
       : `<span class="ext">${esc(ext)}</span>`;
     return `<article class="file" style="animation-delay:${i*50}ms">
@@ -566,29 +624,37 @@ document.addEventListener("click", async e => {
   }
 });
 
-/* ===== Player profile + selfie ===== */
-let me = null;          // {id, name, avatar}
-let stream = null;
-let shotData = null;
+/* ===== Player profile ===== */
+let me = null;  // {id, name, avatar, hasAvatar}
+
+// Each device remembers a private key for the players it created, so only that
+// device can change the player's photo later.
+const keys = {
+  all(){ try { return JSON.parse(localStorage.getItem("academy_keys") || "{}"); } catch { return {}; } },
+  get(id){ return this.all()[id] || ""; },
+  set(id, key){ const k = this.all(); k[id] = key; localStorage.setItem("academy_keys", JSON.stringify(k)); }
+};
 
 function showStep(id){
   for(const s of ["stepName","stepSelfie","stepReady","game","result"]) $("#"+s).hidden = s !== id;
 }
 
 function setMe(p){
-  me = p;
-  if(p){
-    localStorage.setItem("academy_name", p.name);
-    $("#chip").innerHTML = `<button class="chip" data-v="arena"><img src="${esc(p.avatar)}" alt="">${esc(p.name)}</button>`;
+  me = p && p.hasAvatar ? p : null;
+  if(me){
+    localStorage.setItem("academy_name", me.name);
+    $("#chip").innerHTML = `<button class="chip" data-v="arena">${avatarHTML(me.avatar, me.name)}${esc(me.name)}</button>`;
   } else {
     $("#chip").innerHTML = "";
   }
 }
 
-function showReady(isNew){
+function showReady(hello){
   $("#meImg").src = me.avatar;
   $("#meName").textContent = me.name;
-  $("#meHello").textContent = isNew ? "Player created!" : "Welcome back";
+  $("#meHello").textContent = hello || "Welcome back";
+  $("#changePhoto").hidden = !keys.get(me.id);
+  $("#startErr").textContent = "";
   showStep("stepReady");
 }
 
@@ -609,13 +675,11 @@ $("#nameForm").onsubmit = async e => {
 
   try {
     const res = await api("profile", {}, {name});
-    if(res.exists){
+    if(res.exists && res.profile.hasAvatar){
       setMe(res.profile);
-      showReady(false);
+      showReady();
     } else {
-      $("#selfieName").textContent = name;
-      showStep("stepSelfie");
-      resetCamUI();
+      openSelfie(res.exists ? "reset" : "new", res.exists ? res.profile.name : name);
     }
   } catch(error) {
     err.textContent = error.message;
@@ -626,7 +690,7 @@ $("#nameForm").onsubmit = async e => {
 };
 
 $("#notMe").onclick = $("#backName").onclick = () => {
-  stopCamera();
+  Studio.stop();
   setMe(null);
   localStorage.removeItem("academy_name");
   $("#pname").value = "";
@@ -634,137 +698,309 @@ $("#notMe").onclick = $("#backName").onclick = () => {
   $("#pname").focus();
 };
 
-function camMsg(text, cls = ""){
-  $("#camMsg").className = "fb " + cls;
-  $("#camMsg").textContent = text;
+$("#changePhoto").onclick = () => openSelfie("update", me.name);
+$("#cancelSelfie").onclick = () => { Studio.stop(); showReady(); };
+
+/* ===== Selfie studio =====
+   Two ways in (camera or upload), one editor: the photo can be zoomed and dragged
+   inside the circle before it's checked and saved as a 512×512 JPEG. */
+let selfieMode = "new";   // "new" | "reset" | "update"
+let selfieName = "";
+
+function openSelfie(mode, name){
+  selfieMode = mode;
+  selfieName = name;
+  $("#selfieTitle").textContent = mode === "update" ? `Change your photo, ${name}` : `Hi ${name}, add your photo`;
+  $("#selfieIntro").textContent = mode === "update"
+    ? "Your new photo replaces the old one everywhere: the leaderboard, the game and the top bar."
+    : mode === "reset"
+      ? "A teacher reset your picture. Add a new one to keep playing. Your scores are still saved."
+      : "It becomes your profile picture. Every time you type your name, this picture shows up. It has to be a real photo of your face.";
+  $("#selfieSteps").hidden = mode === "update";
+  $("#cancelSelfie").hidden = mode !== "update";
+  $("#backName").hidden = mode === "update";
+  Studio.reset();
+  showStep("stepSelfie");
 }
 
-function camButtons(html){
-  $("#camCtl").innerHTML = html;
-}
+const Studio = {
+  stream:null, facing:"user", timer:true, src:null, zoom:1, ox:0, oy:0, busy:false, cams:0,
 
-function resetCamUI(){
-  shotData = null;
-  $("#shot").hidden = true;
-  $("#video").hidden = true;
-  $("#ring").hidden = true;
-  $("#scan").hidden = true;
-  $("#count").hidden = true;
-  $("#camPh").hidden = false;
-  $("#camPh").textContent = "Tap “Turn on camera” to begin.";
-  camMsg("");
-  camButtons('<button class="btn" id="camOn">📷 Turn on camera</button>');
-}
+  msg(text, cls = ""){
+    $("#camMsg").className = "fb " + cls;
+    $("#camMsg").textContent = text;
+  },
+  buttons(html){ $("#camCtl").innerHTML = html; },
 
-function stopCamera(){
-  if(stream){
-    stream.getTracks().forEach(t => t.stop());
-    stream = null;
-  }
-}
+  reset(){
+    this.stop();
+    this.src = null; this.busy = false;
+    $("#srcPick").hidden = false;
+    $("#studio").hidden = true;
+    this.msg("");
+  },
 
-async function startCamera(){
-  camMsg("");
-  if(!navigator.mediaDevices?.getUserMedia){
-    camMsg("Your browser can’t use the camera. Try Chrome or Safari on a phone or laptop with a camera.", "bad");
-    return;
-  }
-  camButtons('<button class="btn" disabled><span class="spin"></span> Starting camera</button>');
-  try {
-    stopCamera();
-    stream = await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:"user", width:{ideal:720}, height:{ideal:720}},
-      audio:false
-    });
-    const v = $("#video");
-    v.srcObject = stream;
-    await v.play().catch(() => {});
-    v.hidden = false;
-    $("#ring").hidden = false;
-    $("#shot").hidden = true;
-    $("#camPh").hidden = true;
-    camMsg("Line your face up inside the circle.", "muted");
-    camButtons('<button class="btn lg" id="snap">Take selfie</button>');
-  } catch(err) {
-    const denied = err && (err.name === "NotAllowedError" || err.name === "SecurityError");
-    const none = err && (err.name === "NotFoundError" || err.name === "OverconstrainedError");
-    camMsg(denied
-      ? "Camera access was blocked. Allow the camera in your browser’s address bar, then try again."
-      : none ? "No camera was found on this device. You need a camera to take your selfie."
-      : "Couldn’t start the camera: " + (err.message || err), "bad");
-    camButtons('<button class="btn" id="camOn">Try again</button>');
-  }
-}
+  stop(){
+    if(this.stream){
+      this.stream.getTracks().forEach(t => t.stop());
+      this.stream = null;
+    }
+    $("#video").srcObject = null;
+  },
 
-async function snap(){
-  const v = $("#video");
-  camButtons("");
-  camMsg("Hold still...", "muted");
-  const c = $("#count");
-  c.hidden = false;
-  for(const n of [3,2,1]){
-    c.textContent = n;
-    await sleep(reduce ? 250 : 750);
-  }
-  c.hidden = true;
-
-  const size = 512;
-  const vw = v.videoWidth, vh = v.videoHeight;
-  if(!vw || !vh){
-    camMsg("The camera isn’t ready yet. Try again.", "bad");
-    camButtons('<button class="btn lg" id="snap">Take selfie</button>');
-    return;
-  }
-  const s = Math.min(vw, vh);
-  const cv = document.createElement("canvas");
-  cv.width = cv.height = size;
-  const x = cv.getContext("2d");
-  x.translate(size, 0);
-  x.scale(-1, 1);   // mirror, so it matches the preview
-  x.drawImage(v, (vw - s)/2, (vh - s)/2, s, s, 0, 0, size, size);
-  shotData = cv.toDataURL("image/jpeg", 0.88);
-
-  const f = $("#camFlash");
-  f.classList.remove("go"); f.offsetHeight; f.classList.add("go");
-
-  stopCamera();
-  v.hidden = true;
-  $("#ring").hidden = true;
-  $("#shot").src = shotData;
-  $("#shot").hidden = false;
-  camMsg("Looking good? Use this photo or retake it.", "muted");
-  camButtons('<button class="btn ghost" id="retake">Retake</button><button class="btn" id="usePhoto">Use this photo</button>');
-}
-
-async function usePhoto(){
-  if(!shotData) return;
-  camButtons('<button class="btn" disabled><span class="spin"></span> Checking</button>');
-  camMsg("");
-  $("#scan").hidden = false;
-
-  try {
-    const res = await post("selfie", {name:$("#selfieName").textContent, image:shotData});
+  layout(stage){ // "live" | "edit" | "idle"
+    $("#srcPick").hidden = true;
+    $("#studio").hidden = false;
+    $("#video").hidden = stage !== "live";
+    $("#ring").hidden = stage !== "live";
+    $("#edit").hidden = stage !== "edit";
+    $("#camPh").hidden = stage !== "idle";
+    $("#camTools").hidden = stage !== "live";
+    $("#zoomRow").hidden = stage === "idle";
+    $("#dragHint").hidden = stage !== "edit";
     $("#scan").hidden = true;
-    setMe(res.profile);
-    showReady(true);
-  } catch(err) {
-    $("#scan").hidden = true;
-    if(err.status === 409 && err.data?.profile){
-      setMe(err.data.profile);
-      showReady(false);
+    $("#count").hidden = true;
+  },
+
+  setZoom(z){
+    this.zoom = Math.min(3, Math.max(1, z));
+    $("#zoom").value = this.zoom;
+    if(!$("#video").hidden) $("#video").style.transform = `${this.facing === "user" ? "scaleX(-1) " : ""}scale(${this.zoom})`;
+    if(this.src) this.draw();
+  },
+
+  async start(){
+    this.msg("");
+    if(!navigator.mediaDevices?.getUserMedia){
+      this.layout("idle");
+      $("#camPh").textContent = "No camera available here.";
+      this.msg("This browser can’t use the camera. You can upload a photo instead.", "bad");
+      this.buttons('<button class="btn" data-a="upload">🖼️ Upload a photo</button>');
       return;
     }
-    camMsg((err.data?.rejected ? "✗ Not accepted: " : "") + err.message, "bad");
-    camButtons('<button class="btn" id="retake">Retake selfie</button>');
-  }
-}
+    this.layout("idle");
+    $("#camPh").textContent = "Starting camera...";
+    this.buttons('<button class="btn" disabled><span class="spin"></span> Starting camera</button>');
+    try {
+      this.stop();
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video:{facingMode:this.facing, width:{ideal:1280}, height:{ideal:1280}},
+        audio:false
+      });
+      const v = $("#video");
+      v.srcObject = this.stream;
+      await v.play().catch(() => {});
+      this.src = null;
+      this.layout("live");
+      this.setZoom(1);
+      // Only offer "switch camera" when the device actually has more than one.
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        this.cams = devices.filter(d => d.kind === "videoinput").length;
+      } catch { this.cams = 1; }
+      $("#flipCam").hidden = this.cams < 2;
+      this.msg("Line your face up inside the circle.", "muted");
+      this.buttons('<button class="btn ghost" data-a="upload">Upload instead</button><button class="btn lg" data-a="snap">Take selfie</button>');
+    } catch(err) {
+      const denied = err && (err.name === "NotAllowedError" || err.name === "SecurityError");
+      const none = err && (err.name === "NotFoundError" || err.name === "OverconstrainedError");
+      $("#camPh").textContent = "Camera is off.";
+      this.msg(denied
+        ? "Camera access was blocked. Allow the camera in your browser’s address bar, or upload a photo instead."
+        : none ? "No camera was found on this device. You can upload a photo instead."
+        : "Couldn’t start the camera: " + (err.message || err), "bad");
+      this.buttons('<button class="btn ghost" data-a="camera">Try camera again</button><button class="btn" data-a="upload">🖼️ Upload a photo</button>');
+    }
+  },
 
-$("#camCtl").onclick = e => {
-  const id = e.target.closest("button")?.id;
-  if(id === "camOn" || id === "retake") startCamera();
-  if(id === "snap") snap();
-  if(id === "usePhoto") usePhoto();
+  async snap(){
+    if(this.busy) return;
+    this.busy = true;
+    const v = $("#video");
+    this.buttons("");
+    if(this.timer){
+      this.msg("Hold still...", "muted");
+      const c = $("#count");
+      c.hidden = false;
+      for(const n of [3,2,1]){
+        c.textContent = n;
+        await sleep(reduce ? 250 : 750);
+        if(!this.stream){ this.busy = false; return; } // left the page during the countdown
+      }
+      c.hidden = true;
+    }
+    this.busy = false;
+    const vw = v.videoWidth, vh = v.videoHeight;
+    if(!vw || !vh){
+      this.msg("The camera isn’t ready yet. Try again.", "bad");
+      this.buttons('<button class="btn lg" data-a="snap">Take selfie</button>');
+      return;
+    }
+    // Keep the full frame so the student can still adjust the crop afterwards.
+    const frame = document.createElement("canvas");
+    frame.width = vw; frame.height = vh;
+    const fx = frame.getContext("2d");
+    if(this.facing === "user"){ fx.translate(vw, 0); fx.scale(-1, 1); } // match the mirrored preview
+    fx.drawImage(v, 0, 0, vw, vh);
+
+    const f = $("#camFlash");
+    f.classList.remove("go"); f.offsetHeight; f.classList.add("go");
+    this.stop();
+    this.edit(frame, this.zoom);
+  },
+
+  pickFile(){
+    $("#fileIn").value = "";
+    $("#fileIn").click();
+  },
+
+  async loadFile(file){
+    if(!file) return;
+    if(!file.type.startsWith("image/") && !/\.(heic|heif)$/i.test(file.name)){
+      this.msg("Please choose a photo (JPG, PNG, WebP or HEIC).", "bad");
+      return;
+    }
+    if(file.size > 25 * 1024 * 1024){
+      this.msg("That file is too big. Choose a photo under 25 MB.", "bad");
+      return;
+    }
+    this.stop();
+    this.layout("idle");
+    $("#camPh").textContent = "Opening photo...";
+    this.msg("");
+    try {
+      const img = await new Promise((res, rej) => {
+        const i = new Image();
+        i.onload = () => res(i);
+        i.onerror = () => rej(new Error("unreadable"));
+        i.src = URL.createObjectURL(file);
+      });
+      if(img.naturalWidth < 200 || img.naturalHeight < 200){
+        URL.revokeObjectURL(img.src);
+        throw new Error("small");
+      }
+      // Shrink very large photos once so editing stays smooth.
+      const scale = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.naturalWidth * scale);
+      c.height = Math.round(img.naturalHeight * scale);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(img.src);
+      this.edit(c, 1);
+    } catch(err) {
+      $("#camPh").textContent = "No photo yet.";
+      this.msg(err.message === "small"
+        ? "That photo is too small. Choose a bigger, clearer one."
+        : "This browser couldn’t open that photo. Try a JPG or PNG.", "bad");
+      this.buttons('<button class="btn ghost" data-a="camera">📷 Use camera</button><button class="btn" data-a="upload">Choose another</button>');
+    }
+  },
+
+  edit(source, zoom){
+    this.src = source;
+    this.ox = 0; this.oy = 0;
+    this.layout("edit");
+    this.setZoom(zoom);
+    this.msg("Looking good? Use this photo or try again.", "muted");
+    this.buttons('<button class="btn ghost" data-a="again">Try again</button><button class="btn" data-a="use">Use this photo</button>');
+  },
+
+  // Work out the square area of the source that is visible in the circle.
+  crop(){
+    const w = this.src.width, h = this.src.height;
+    const size = Math.min(w, h) / this.zoom;
+    const maxX = (w - size) / 2, maxY = (h - size) / 2;
+    this.ox = Math.min(maxX, Math.max(-maxX, this.ox));
+    this.oy = Math.min(maxY, Math.max(-maxY, this.oy));
+    return {sx: w/2 - size/2 + this.ox, sy: h/2 - size/2 + this.oy, size};
+  },
+
+  draw(canvas = $("#edit")){
+    const {sx, sy, size} = this.crop();
+    const x = canvas.getContext("2d");
+    x.imageSmoothingQuality = "high";
+    x.drawImage(this.src, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
+  },
+
+  async use(){
+    if(!this.src) return;
+    const out = document.createElement("canvas");
+    out.width = out.height = 512;
+    this.draw(out);
+    const image = out.toDataURL("image/jpeg", 0.88);
+
+    this.buttons('<button class="btn" disabled><span class="spin"></span> Checking</button>');
+    this.msg("");
+    $("#zoomRow").hidden = $("#dragHint").hidden = true;
+    $("#scan").hidden = false;
+
+    try {
+      const res = await post("selfie", {name:selfieName, image, key:keys.get(me?.id || "") || keys.get(this.idFor())});
+      if(res.key) keys.set(res.profile.id, res.key);
+      setMe(res.profile);
+      showReady(selfieMode === "update" ? "Photo updated!" : selfieMode === "reset" ? "Welcome back!" : "Player created!");
+      if(current === "arena") renderBoard();
+    } catch(err) {
+      $("#scan").hidden = true;
+      if(err.status === 409 && err.data?.profile){
+        setMe(err.data.profile);
+        showReady();
+        return;
+      }
+      this.msg((err.data?.rejected ? "Not accepted: " : "") + err.message, "bad");
+      $("#zoomRow").hidden = $("#dragHint").hidden = false;
+      this.buttons('<button class="btn ghost" data-a="again">Try another photo</button><button class="btn" data-a="use">Check again</button>');
+    }
+  },
+
+  idFor(){ return me && cleanName(me.name).toLowerCase() === selfieName.toLowerCase() ? me.id : ""; },
+
+  again(){
+    this.src = null;
+    $("#srcPick").hidden = false;
+    $("#studio").hidden = true;
+    this.msg("");
+  }
 };
+
+$("#pickCam").onclick = () => Studio.start();
+$("#pickFile").onclick = () => Studio.pickFile();
+$("#fileIn").onchange = e => Studio.loadFile(e.target.files[0]);
+$("#zoom").oninput = e => Studio.setZoom(+e.target.value);
+$("#flipCam").onclick = () => { Studio.facing = Studio.facing === "user" ? "environment" : "user"; Studio.start(); };
+$("#timerBtn").onclick = e => {
+  Studio.timer = !Studio.timer;
+  e.currentTarget.setAttribute("aria-pressed", Studio.timer);
+  e.currentTarget.textContent = Studio.timer ? "⏱ 3s timer" : "⏱ Timer off";
+};
+$("#camCtl").onclick = e => {
+  const a = e.target.closest("button")?.dataset.a;
+  if(a === "camera") Studio.start();
+  if(a === "upload") Studio.pickFile();
+  if(a === "snap") Studio.snap();
+  if(a === "use") Studio.use();
+  if(a === "again") Studio.again();
+};
+
+// Drag to reposition, and wheel/pinch-free zoom via the slider.
+(function dragEditor(){
+  const cv = $("#edit");
+  let last = null;
+  cv.addEventListener("pointerdown", e => { last = {x:e.clientX, y:e.clientY}; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener("pointermove", e => {
+    if(!last || !Studio.src) return;
+    const {size} = Studio.crop();
+    const ratio = size / cv.getBoundingClientRect().width;
+    Studio.ox -= (e.clientX - last.x) * ratio;
+    Studio.oy -= (e.clientY - last.y) * ratio;
+    last = {x:e.clientX, y:e.clientY};
+    Studio.draw();
+  });
+  const end = () => last = null;
+  cv.addEventListener("pointerup", end);
+  cv.addEventListener("pointercancel", end);
+  cv.addEventListener("wheel", e => { e.preventDefault(); Studio.setZoom(Studio.zoom - e.deltaY * 0.002); }, {passive:false});
+})();
 
 // Returning player: restore their name and picture automatically
 (async () => {
@@ -773,9 +1009,9 @@ $("#camCtl").onclick = e => {
   $("#pname").value = saved;
   try {
     const res = await api("profile", {}, {name:saved});
-    if(res.exists){
+    if(res.exists && res.profile.hasAvatar){
       setMe(res.profile);
-      showReady(false);
+      if(!$("#stepName").hidden) showReady();
     }
   } catch {}
 })();
@@ -795,13 +1031,13 @@ async function renderAdmin(){
 
   if(!status.loggedIn){
     box.innerHTML = `
-      <div class="kicker">// teachers only</div>
-      <h2 class="cur">Admin sign in</h2>
+      <div class="kicker">Teachers only</div>
+      <h2>Admin sign in</h2>
       <div class="panel" style="max-width:460px">
         <form id="lf">
           <label for="pw" style="margin-top:0">Admin password</label>
           <input type="password" id="pw" autocomplete="current-password" required>
-          <div class="fb bad" id="pwErr"></div>
+          <div class="fb bad" id="pwErr" role="alert"></div>
           <button class="btn wide">Sign in</button>
         </form>
       </div>`;
@@ -824,7 +1060,7 @@ async function renderAdmin(){
 
   box.innerHTML = `
     <div class="row" style="justify-content:space-between">
-      <div><div class="kicker">// signed in</div><h2 class="cur">Admin</h2></div>
+      <div><div class="kicker">Signed in</div><h2>Admin</h2></div>
       <button class="btn sm ghost" id="out">Sign out</button>
     </div>
 
@@ -832,19 +1068,19 @@ async function renderAdmin(){
       <h3>Upload files</h3>
       <form id="uf">
         <label for="ft">Title</label>
-        <input type="text" id="ft" placeholder="Week 3 worksheet">
+        <input type="text" id="ft" maxlength="120" placeholder="Week 3 worksheet">
         <label for="fd">Note (optional)</label>
-        <textarea id="fd" rows="2"></textarea>
+        <textarea id="fd" rows="2" maxlength="1000"></textarea>
         <label for="ff">Files (any type, pick several, 8 MB each)</label>
         <input type="file" id="ff" multiple required>
         <div class="fb" id="um"></div>
-        <button class="btn">Upload</button>
+        <button class="btn" id="ub">Upload</button>
       </form>
     </div>
 
     <div class="panel">
       <h3>Players</h3>
-      <p class="muted">Reset a player to remove their selfie. They’ll take a new one next time they enter their name.</p>
+      <p class="muted">Reset a player to remove their picture. They keep their scores and add a new photo next time they enter their name.</p>
       <div id="playerList"></div>
     </div>
 
@@ -879,12 +1115,19 @@ async function renderAdmin(){
   $("#uf").onsubmit = async e => {
     e.preventDefault();
     const m = $("#um");
+    const big = [...$("#ff").files].find(f => f.size > 8 * 1024 * 1024);
+    if(big){
+      m.className = "fb bad";
+      m.textContent = `“${big.name}” is bigger than 8 MB.`;
+      return;
+    }
     const form = new FormData();
     form.append("title", $("#ft").value.trim());
     form.append("note", $("#fd").value.trim());
     for(const file of $("#ff").files) form.append("files", file);
     m.className = "fb";
     m.textContent = "Uploading...";
+    $("#ub").disabled = true;
     try {
       await api("upload", {method:"POST", body:form});
       m.className = "fb good";
@@ -894,6 +1137,8 @@ async function renderAdmin(){
     } catch(err) {
       m.className = "fb bad";
       m.textContent = "Upload failed: " + err.message;
+    } finally {
+      $("#ub").disabled = false;
     }
   };
 
@@ -908,9 +1153,11 @@ async function renderPlayers(){
     const list = await api("players");
     box.innerHTML = list.length
       ? '<div class="players">' + list.map(p => `<div>
-          <img src="${esc(p.avatar)}" alt="" loading="lazy">
+          ${avatarHTML(p.avatar, p.name)}
           <b>${esc(p.name)}</b>
-          <button class="btn sm red" data-reset="${esc(p.id)}" data-name="${esc(p.name)}">Reset</button>
+          ${p.hasAvatar
+            ? `<button class="btn sm red" data-reset="${esc(p.id)}" data-name="${esc(p.name)}">Reset photo</button>`
+            : '<span class="tag">needs a photo</span>'}
         </div>`).join("") + "</div>"
       : '<p class="muted" style="margin-top:10px">No players yet.</p>';
   } catch(err) {
@@ -920,7 +1167,7 @@ async function renderPlayers(){
 
 document.addEventListener("click", async e => {
   const b = e.target.closest("[data-reset]");
-  if(!b || !confirm(`Remove ${b.dataset.name}’s selfie?`)) return;
+  if(!b || !confirm(`Remove ${b.dataset.name}’s picture?`)) return;
   try {
     await post("resetPlayer", {id:b.dataset.reset});
     renderPlayers();
@@ -929,32 +1176,12 @@ document.addEventListener("click", async e => {
   }
 });
 
-/* ===== Math Arena ===== */
-function gen(l){
-  let a,b,op;
-  if(l === "easy"){
-    op = ["+","−"][r(0,1)];
-    a = r(1,20); b = r(1,20);
-    if(op === "−" && b > a) [a,b] = [b,a];
-  } else if(l === "medium"){
-    op = ["+","−","×"][r(0,2)];
-    if(op === "×"){ a = r(2,10); b = r(2,10); }
-    else { a = r(10,99); b = r(10,99); if(op === "−" && b > a) [a,b] = [b,a]; }
-  } else {
-    op = ["×","÷","+"][r(0,2)];
-    if(op === "×"){ a = r(6,15); b = r(6,15); }
-    else if(op === "÷"){ b = r(3,12); a = b*r(3,12); }
-    else { a = r(100,999); b = r(100,999); }
-  }
-  const ans = op === "+" ? a+b : op === "−" ? a-b : op === "×" ? a*b : a/b;
-  return {q:`${a} ${op} ${b}`, ans};
-}
-
+/* ===== Math Arena =====
+   The server picks the questions, times every answer and calculates the score,
+   so the leaderboard only shows scores that were really earned. */
 let level = "easy";
 let G = null;
 let boardLevel = "all";
-const TIME = 15000;
-const N = 10;
 
 $("#lv").onclick = e => {
   const b = e.target.closest("button");
@@ -974,34 +1201,64 @@ function setBoard(l){
   return renderBoard();
 }
 
-$("#start").onclick = () => {
+// Leaving the arena stops the camera and abandons any round in progress.
+function leaveArena(){
+  Studio.stop();
+  if(!$("#stepSelfie").hidden && Studio.stream === null && !$("#video").hidden) Studio.again();
+  if(G && !G.over){
+    endRound();
+    if(me) showReady();
+  }
+}
+
+function endRound(){
+  if(!G) return;
+  G.over = true;
+  cancelAnimationFrame(G.raf);
+  clearTimeout(G.nextTimer);
+}
+
+$("#start").onclick = async () => {
   if(!me){ showStep("stepName"); return; }
-  G = {name:me.name, level, i:0, score:0, streak:0, best:0, right:0, raf:0, lock:false, marks:[]};
-  $("#gImg").src = me.avatar;
-  showStep("game");
-  next();
+  const btn = $("#start");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Getting ready';
+  $("#startErr").textContent = "";
+  try {
+    const res = await post("start", {name:me.name, level});
+    G = {id:res.gameId, total:res.total, timeMs:res.timeMs, level, name:me.name, index:0,
+         score:0, streak:0, marks:[], raf:0, lock:false, over:false};
+    $("#gImg").src = me.avatar;
+    showStep("game");
+    show(res.index, res.question);
+  } catch(err) {
+    $("#startErr").textContent = err.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Start the race";
+  }
 };
 
-$("#again").onclick = () => me ? showReady(false) : showStep("stepName");
+$("#again").onclick = () => me ? showReady() : showStep("stepName");
 
 function drawDots(){
-  $("#dots").innerHTML = Array.from({length:N}, (_, i) =>
-    `<i class="${G.marks[i] === true ? "ok" : G.marks[i] === false ? "no" : i === G.i-1 ? "now" : ""}"></i>`
+  $("#dots").innerHTML = Array.from({length:G.total}, (_, i) =>
+    `<i class="${G.marks[i] === true ? "ok" : G.marks[i] === false ? "no" : i === G.index ? "now" : ""}"></i>`
   ).join("");
 }
 
-function next(){
-  if(G.i >= N) return finish();
-  G.cur = gen(G.level);
-  G.i++;
+function show(index, question){
+  if(G.over) return;
+  G.index = index;
   G.lock = false;
   G.t0 = performance.now();
-  $("#hq").textContent = `Question ${G.i} of ${N}`;
+  $("#hq").textContent = `Question ${index + 1} of ${G.total}`;
   const q = $("#q");
-  q.textContent = G.cur.q;
+  q.textContent = question;
   q.style.animation = "none"; q.offsetHeight; q.style.animation = "";
   $("#fb").textContent = "";
   $("#ans").value = "";
+  $("#ans").disabled = false;
   $("#ans").focus();
   hud();
   drawDots();
@@ -1017,75 +1274,82 @@ function hud(){
 function tick(){
   cancelAnimationFrame(G.raf);
   const loop = () => {
-    const left = Math.max(0, 1 - (performance.now() - G.t0)/TIME);
+    if(G.over || G.lock) return;
+    const left = Math.max(0, 1 - (performance.now() - G.t0)/G.timeMs);
     const bar = $("#tb");
     bar.style.transform = `scaleX(${left})`;
-    bar.style.background = left < .3 ? "var(--red)" : "var(--g)";
-    if(left <= 0 && !G.lock) return answer(null);
-    if(!G.lock) G.raf = requestAnimationFrame(loop);
+    bar.style.background = left < .3 ? "var(--red)" : "var(--blue)";
+    if(left <= 0) return answer(null);
+    G.raf = requestAnimationFrame(loop);
   };
   loop();
 }
 
 $("#f").onsubmit = e => {
   e.preventDefault();
-  if(!G.lock && $("#ans").value !== "") answer(+$("#ans").value);
+  if(G && !G.lock && $("#ans").value !== "") answer(+$("#ans").value);
 };
 
-function answer(v){
-  G.lock = true;
-  cancelAnimationFrame(G.raf);
+async function answer(v){
+  const game = G;
+  game.lock = true;
+  cancelAnimationFrame(game.raf);
+  $("#ans").disabled = true;
   const fb = $("#fb"), panel = $("#game");
-  if(v === G.cur.ans){
-    const left = Math.max(0, 1 - (performance.now()-G.t0)/TIME);
-    G.streak++;
-    G.best = Math.max(G.best, G.streak);
-    G.right++;
-    G.marks[G.i-1] = true;
-    const pts = 100 + Math.round(left*50) + (G.streak-1)*10;
-    G.score += pts;
+  fb.className = "fb muted";
+  fb.textContent = "Checking...";
+
+  let res;
+  try {
+    res = await post("answer", {gameId:game.id, value:v});
+  } catch(err) {
+    if(game.over) return;
+    fb.className = "fb bad";
+    fb.textContent = "Couldn’t check your answer: " + err.message;
+    endRound();
+    setTimeout(() => game === G && showReady(), 2500);
+    return;
+  }
+  if(game.over) return;
+
+  game.score = res.score;
+  game.streak = res.streak;
+  game.marks[res.index] = res.correct;
+  if(res.correct){
     fb.className = "fb good";
-    fb.textContent = "Correct! +" + pts;
+    fb.textContent = "Correct! +" + res.pts;
     panel.classList.remove("flashg"); panel.offsetHeight; panel.classList.add("flashg");
   } else {
-    G.streak = 0;
-    G.marks[G.i-1] = false;
     fb.className = "fb bad";
-    fb.textContent = (v === null ? "Time’s up. " : "Not quite. ") + "The answer was " + G.cur.ans;
+    fb.textContent = (res.timedOut ? "Time’s up. " : "Not quite. ") + "The answer was " + res.answer;
     panel.classList.remove("shake"); panel.offsetHeight; panel.classList.add("shake");
   }
   hud();
   drawDots();
-  setTimeout(next, 1100);
+  game.nextTimer = setTimeout(() => {
+    if(res.next) show(res.next.index, res.next.question);
+    else finish(res.result);
+  }, 1100);
 }
 
-async function finish(){
+async function finish(result){
+  G.over = true;
   showStep("result");
   $("#rImg").src = me.avatar;
-  $("#rt").textContent = G.right >= 9 ? "Outstanding, " + G.name + "!"
-    : G.right >= 6 ? "Great work, " + G.name + "!"
+  $("#rt").textContent = result.correct >= 9 ? "Outstanding, " + G.name + "!"
+    : result.correct >= 6 ? "Great work, " + G.name + "!"
     : "Good effort, " + G.name + ". Try again!";
 
   const el = $("#rs"), t0 = performance.now();
   (function up(t){
     const p = Math.min(1,(t-t0)/1400);
-    el.textContent = Math.round(G.score*(1-Math.pow(1-p,3)));
+    el.textContent = Math.round(result.score*(1-Math.pow(1-p,3)));
     if(p < 1) requestAnimationFrame(up);
   })(t0);
 
-  if(G.right >= 6 && !reduce) confetti();
-
-  const base = `${G.right} of ${N} correct · best streak ${G.best}`;
-  $("#rd").textContent = base + " · saving score...";
-
-  try {
-    await post("score", {name:G.name, score:G.score, level:G.level});
-    const top = await setBoard(G.level);
-    const rank = (top || []).findIndex(x => x.name === G.name && x.score === G.score) + 1;
-    $("#rd").textContent = base + (rank ? ` · rank #${rank} in ${G.level}` : " · score saved");
-  } catch(err) {
-    $("#rd").textContent = base + " · couldn’t save score: " + err.message;
-  }
+  if(result.correct >= 6 && !reduce) confetti();
+  $("#rd").textContent = `${result.correct} of ${result.total} correct · best streak ${result.bestStreak} · rank #${result.rank} in ${result.level}`;
+  setBoard(result.level);
 }
 
 async function renderBoard(){
@@ -1129,11 +1393,11 @@ async function renderBoard(){
 function confetti(){
   const c = $("#conf"), x = c.getContext("2d");
   c.width = innerWidth; c.height = innerHeight;
-  const cols = ["#00ff41","#7dffa6","#b6ffcb","#ffffff"];
+  const cols = ["#1d4ed8","#3b82f6","#93c5fd","#0b2a6b","#f2b705"];
   const P = Array.from({length:140}, () => ({
     x:innerWidth/2, y:innerHeight/2,
     vx:(Math.random()-.5)*16, vy:Math.random()*-14-3,
-    s:Math.random()*8+4, c:cols[r(0,3)], a:Math.random()*6
+    s:Math.random()*8+4, c:cols[r(0,cols.length-1)], a:Math.random()*6
   }));
   const t0 = performance.now();
   (function f(t){
