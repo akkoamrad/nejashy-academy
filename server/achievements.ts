@@ -34,9 +34,10 @@ const LEVEL_NAME: Record<string, string> = { easy: "Easy", medium: "Medium", har
    Everyone gets the same challenges each week. Progress is worked out from real activity. */
 export const CHALLENGES = [
   { id: "focus-120", icon: "🎯", title: "Focus for 2 hours", detail: "Complete 120 minutes of focus sessions this week.", goal: 120, unit: "min" },
-  { id: "arena-5", icon: "🎮", title: "Arena regular", detail: "Finish 5 Math Arena rounds this week.", goal: 5, unit: "rounds" },
+  { id: "arena-5", icon: "🎮", title: "Game Hub regular", detail: "Finish 5 Game Hub rounds this week.", goal: 5, unit: "rounds" },
   { id: "sharp-8", icon: "🧠", title: "Sharp mind", detail: "Get 8 or more right in a Medium or Hard round.", goal: 1, unit: "round" },
   { id: "focus-days-4", icon: "📅", title: "Steady week", detail: "Focus on 4 different days this week.", goal: 4, unit: "days" },
+  { id: "both-games", icon: "🧩", title: "All-rounder", detail: "Finish a round of both Math Arena and Pattern Pro this week.", goal: 2, unit: "games" },
 ] as const;
 
 export async function challengeProgress(playerId: string, now = new Date()) {
@@ -44,13 +45,16 @@ export async function challengeProgress(playerId: string, now = new Date()) {
   const [focus, rounds] = await Promise.all([
     db.select({ minutes: focusSessions.minutes, endedAt: focusSessions.endedAt }).from(focusSessions)
       .where(and(eq(focusSessions.playerId, playerId), eq(focusSessions.completed, true), gte(focusSessions.endedAt, since))),
-    db.select({ level: scores.level, correct: scores.correct }).from(scores)
+    db.select({ game: scores.game, level: scores.level, correct: scores.correct }).from(scores)
       .where(and(eq(scores.playerId, playerId), gte(scores.createdAt, since))),
   ]);
   const minutes = focus.reduce((t, f) => t + f.minutes, 0);
   const days = new Set(focus.map(f => dayKey(f.endedAt!))).size;
   const sharp = rounds.some(r => r.level !== "easy" && r.correct >= 8) ? 1 : 0;
-  const values: Record<string, number> = { "focus-120": minutes, "arena-5": rounds.length, "sharp-8": sharp, "focus-days-4": days };
+  const values: Record<string, number> = {
+    "focus-120": minutes, "arena-5": rounds.length, "sharp-8": sharp, "focus-days-4": days,
+    "both-games": new Set(rounds.map(r => r.game)).size,
+  };
   return {
     week: weekKey(now),
     challenges: CHALLENGES.map(c => ({ ...c, progress: Math.min(values[c.id], c.goal), done: values[c.id] >= c.goal })),
@@ -65,37 +69,42 @@ async function challengeAwards(playerId: string) {
   }));
 }
 
-/* ===== After a Math Arena round ===== */
+const GAME_NAME: Record<string, string> = { arena: "Math Arena", patterns: "Pattern Pro" };
+
+/* ===== After a Game Hub round ===== */
 export async function afterArenaRound(playerId: string, round: {
-  scoreId: number; level: string; score: number; correct: number; total: number; bestStreak: number; rank: number;
+  scoreId: number; game: string; level: string; score: number; correct: number; total: number; bestStreak: number; rank: number;
 }) {
   const lv = LEVEL_NAME[round.level] || round.level;
+  const gm = GAME_NAME[round.game] || "Game Hub";
+  const key = `${round.game}:${round.level}`;
   const list: NewAchievement[] = [];
 
   // Personal best for this level (only counts if they had played this level before)
   const [prev] = await db.select({ best: sql<number>`max(${scores.score})::int`, n: sql<number>`count(*)::int` })
-    .from(scores).where(and(eq(scores.playerId, playerId), eq(scores.level, round.level), sql`${scores.id} <> ${round.scoreId}`));
+    .from(scores).where(and(eq(scores.playerId, playerId), eq(scores.game, round.game), eq(scores.level, round.level),
+      sql`${scores.id} <> ${round.scoreId}`));
   if (prev.n > 0 && round.score > (prev.best || 0)) {
-    list.push({ code: `arena-pb:${round.scoreId}`, source: "game", icon: "⚡", value: round.score,
-      title: `New personal best in Math Arena (${lv})`, detail: `${round.correct} of ${round.total} correct · best streak ${round.bestStreak}` });
+    list.push({ code: `pb:${round.scoreId}`, source: "game", icon: "⚡", value: round.score,
+      title: `New personal best in ${gm} (${lv})`, detail: `${round.correct} of ${round.total} correct · best streak ${round.bestStreak}` });
   }
   if (round.correct === round.total) {
-    list.push({ code: `arena-perfect:${round.scoreId}`, source: "game", icon: "💯", value: round.score,
-      title: `Perfect round in Math Arena (${lv})`, detail: `All ${round.total} questions right` });
+    list.push({ code: `perfect:${key}`, source: "game", icon: "💯", value: round.score,
+      title: `Perfect round in ${gm} (${lv})`, detail: `All ${round.total} questions right` });
   }
   if (round.rank <= 3 && round.score > 0) {
-    list.push({ code: `arena-rank:${round.scoreId}`, source: "leaderboard", icon: ["🥇", "🥈", "🥉"][round.rank - 1], value: round.score,
-      title: `Reached #${round.rank} on the ${lv} leaderboard`, detail: "Math Arena · Game Hub" });
+    list.push({ code: `rank:${key}:${round.rank}`, source: "leaderboard", icon: ["🥇", "🥈", "🥉"][round.rank - 1], value: round.score,
+      title: `Reached #${round.rank} on the ${gm} ${lv} leaderboard`, detail: `${gm} · Game Hub` });
   }
 
-  // Milestones
+  // Milestones (across all games)
   const [{ played }] = await db.select({ played: sql<number>`count(*)::int` }).from(scores).where(eq(scores.playerId, playerId));
   for (const [n, icon] of [[1, "🎮"], [10, "🕹️"], [50, "🏆"], [100, "👑"]] as const) {
     if (played >= n) list.push({ code: `arena-played:${n}`, source: "milestone", icon, value: n,
-      title: n === 1 ? "Played a first Math Arena round" : `Played ${n} Math Arena rounds`, detail: "Game Hub milestone" });
+      title: n === 1 ? "Played a first Game Hub round" : `Played ${n} Game Hub rounds`, detail: "Game Hub milestone" });
   }
   if (round.bestStreak >= 10) {
-    list.push({ code: "arena-streak:10", source: "milestone", icon: "🔥", value: 10, title: "10 correct answers in a row", detail: "Math Arena" });
+    list.push({ code: `streak10:${round.game}`, source: "milestone", icon: "🔥", value: 10, title: `10 correct answers in a row in ${gm}`, detail: "Game Hub" });
   }
 
   list.push(...(await challengeAwards(playerId)));
