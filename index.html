@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nejashy Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg:#000;--panel:#041208;--line:#0f4a22;--g:#00ff41;--txt:#b6ffcb;--dim:#4fbf72;--red:#ff4d4d;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--txt);font:400 16px/1.65 "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;min-height:100vh}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:70;background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px)}
+h1,h2,h3{color:var(--g);line-height:1.15;text-shadow:0 0 12px rgba(0,255,65,.4)}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+:focus-visible{outline:2px solid var(--g);outline-offset:3px}
+[hidden]{display:none!important}
+.blink,.cur::after{animation:blink 1s steps(1) infinite}
+.cur::after{content:"_"}
+.blink{font-style:normal}
+@keyframes blink{50%{opacity:0}}
+.btn{display:inline-block;background:var(--g);color:#001a08;font-weight:800;padding:.65em 1.3em;border-radius:4px;text-decoration:none;transition:box-shadow .15s,transform .15s}
+.btn:hover{box-shadow:0 0 22px rgba(0,255,65,.7);transform:translateY(-2px)}
+.btn.ghost{background:transparent;border:1px solid var(--g);color:var(--g)}
+.btn.sm{padding:.3em .8em;font-size:.85rem}
+.btn.red{background:var(--red);color:#1a0000}
+
+#intro{position:fixed;inset:0;z-index:50;background:#000;display:grid;place-items:center;text-align:left;padding:24px;transition:opacity 1s,visibility 1s}
+#intro.out{opacity:0;visibility:hidden}
+#rain{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.intro-in{position:relative;padding:40px 28px;background:radial-gradient(closest-side,rgba(0,0,0,.92) 60%,transparent);max-width:100%}
+#boot{color:var(--dim);font-size:.9rem;white-space:pre;min-height:4.8em}
+.l1{font-size:clamp(1.3rem,5vw,2.2rem);color:var(--txt);margin-top:18px;min-height:1.4em}
+.l2{font-size:clamp(2rem,9vw,5rem);font-weight:800;color:var(--g);text-shadow:0 0 24px rgba(0,255,65,.7);line-height:1.1;min-height:1.2em;word-break:break-word}
+#enter{margin-top:28px;visibility:hidden}
+#enter.show{visibility:visible;animation:in .6s}
+#skip{position:fixed;right:18px;bottom:18px;z-index:55}
+#intro.out ~ #skip{display:none}
+
+header{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.93);display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding:12px 5vw;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;font-size:1.15rem;color:var(--g);text-shadow:0 0 10px rgba(0,255,65,.5)}
+nav{display:flex;gap:2px;flex-wrap:wrap}
+nav button{padding:.35em .8em;border-radius:4px;color:var(--dim)}
+nav button.on{background:var(--panel);color:var(--g);box-shadow:inset 0 0 0 1px var(--line)}
+main{padding:0 5vw 80px;max-width:1000px;margin:auto}
+.view{padding-top:40px;animation:in .4s}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+.hero{padding:50px 0 10px}
+.hero h1{font-size:clamp(2.2rem,8vw,4.6rem);font-weight:800}
+.hero h1 span{display:block}
+.hero p{max-width:36em;margin:20px 0 28px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:24px;margin-top:20px}
+h2{font-size:2rem;margin-bottom:6px}
+.muted{color:var(--dim)}
+input[type=text],input[type=email],input[type=password],input[type=number],textarea,input[type=file]{width:100%;font:inherit;padding:.65em .9em;border-radius:4px;border:1px solid var(--line);background:#000;color:var(--g);caret-color:var(--g)}
+label{display:block;font-weight:700;margin:14px 0 6px}
+
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:20px}
+.file{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px;animation:in .4s both}
+.file h3{font-size:1.1rem}
+.file img,.file video{width:100%;max-height:170px;object-fit:cover;border-radius:4px}
+.file audio{width:100%}
+.meta{font-size:.8rem;color:var(--dim);word-break:break-all}
+.empty{padding:28px;border:1px dashed var(--line);border-radius:6px;margin-top:20px;text-align:center}
+
+.lv{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.lv button{border:1px solid var(--line);padding:.5em 1.1em;border-radius:4px;font-weight:700;color:var(--dim)}
+.lv button.on{border-color:var(--g);color:var(--g);box-shadow:0 0 14px rgba(0,255,65,.35)}
+.hud{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-weight:700}
+.bar{height:10px;background:#000;border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:12px 0}
+.bar i{display:block;height:100%;width:100%;background:var(--g);transform-origin:left;box-shadow:0 0 12px var(--g)}
+.q{font-size:clamp(2.8rem,13vw,5.5rem);font-weight:800;color:var(--g);text-shadow:0 0 20px rgba(0,255,65,.6);text-align:center;margin:24px 0;animation:pop .3s}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+#ans{font-size:2rem;text-align:center;max-width:260px;margin:auto;display:block;-moz-appearance:textfield}
+#ans::-webkit-inner-spin-button,#ans::-webkit-outer-spin-button{-webkit-appearance:none}
+.fb{text-align:center;min-height:2em;margin-top:12px;font-weight:700}
+.good{color:var(--g)}.bad{color:var(--red)}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-12px)}75%{transform:translateX(12px)}}
+.flash{animation:flash .6s}
+@keyframes flash{30%{box-shadow:0 0 0 2px var(--g),0 0 40px rgba(0,255,65,.6)}}
+.big{font-size:4.5rem;font-weight:800;line-height:1;color:var(--g);text-shadow:0 0 24px rgba(0,255,65,.7);text-align:center}
+.board{list-style:none;padding:0;counter-reset:r}
+.board li{counter-increment:r;display:flex;gap:12px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--line)}
+.board li:before{content:"#" counter(r);width:2.6em;flex:none;color:var(--dim)}
+.board li:nth-child(1):before{color:var(--g);font-weight:800}
+.board .n{flex:1;font-weight:700;word-break:break-word}
+.board .s{font-weight:800;color:var(--g)}
+.tag{font-size:.75rem;border:1px solid var(--line);padding:1px 8px;border-radius:99px;color:var(--dim)}
+.flt{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.flt button{border:1px solid var(--line);padding:.25em .8em;border-radius:4px;color:var(--dim);font-size:.85rem}
+.flt button.on{border-color:var(--g);color:var(--g)}
+#conf{position:fixed;inset:0;pointer-events:none;z-index:60}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important}.blink,.cur::after{animation:none!important}}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <canvas id="rain"></canvas>
+  <div class="intro-in">
+    <div id="boot"></div>
+    <div class="l1"><span id="t1"></span><i class="blink" id="c1">_</i></div>
+    <div class="l2"><span id="t2"></span><i class="blink" id="c2" hidden>_</i></div>
+    <button class="btn" id="enter">[ enter ]</button>
+  </div>
+</div>
+<button class="btn ghost sm" id="skip">skip</button>
+
+<header>
+  <button class="brand" data-v="home">nejashy_academy<i class="blink">_</i></button>
+  <nav>
+    <button data-v="home">home</button>
+    <button data-v="library">library</button>
+    <button data-v="arena">math arena</button>
+    <button data-v="admin">admin</button>
+  </nav>
+</header>
+
+<main>
+  <section class="view" id="home">
+    <div class="hero">
+      <h1>Learn together.<span class="cur">Count faster.</span></h1>
+      <p>Welcome to Nejashy Academy. Find lessons and files from your teachers in the Library, then race your classmates in the Math Arena.</p>
+      <div class="row">
+        <button class="btn" data-v="arena">Play the Math Arena</button>
+        <button class="btn ghost" data-v="library">Open the Library</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="library" hidden>
+    <h2 class="cur">Library</h2>
+    <p class="muted">Files shared by your teachers.</p>
+    <div id="libList"></div>
+  </section>
+
+  <section class="view" id="arena" hidden>
+    <h2 class="cur">Math Arena</h2>
+    <p class="muted">10 questions. 15 seconds each. Faster answers and streaks score more.</p>
+
+    <div class="panel" id="setup">
+      <label for="pname">Your name</label>
+      <input type="text" id="pname" maxlength="20" autocomplete="off" placeholder="Type your name">
+      <label>Level</label>
+      <div class="lv" id="lv">
+        <button data-l="easy" class="on">Easy</button>
+        <button data-l="medium">Medium</button>
+        <button data-l="hard">Hard</button>
+      </div>
+      <div class="fb bad" id="nameErr"></div>
+      <button class="btn" id="start">Start the race</button>
+    </div>
+
+    <div class="panel" id="game" hidden>
+      <div class="hud"><span id="hq">Question 1 of 10</span><span id="hs">0 pts</span><span id="hk"></span></div>
+      <div class="bar"><i id="tb"></i></div>
+      <div class="q" id="q"></div>
+      <form id="f"><input type="number" id="ans" inputmode="numeric" autocomplete="off" aria-label="Your answer"></form>
+      <div class="fb" id="fb"></div>
+    </div>
+
+    <div class="panel" id="result" hidden>
+      <h3 id="rt" style="text-align:center;font-size:1.4rem"></h3>
+      <div class="big" id="rs">0</div>
+      <p class="muted" id="rd" style="text-align:center"></p>
+      <div class="row" style="justify-content:center;margin-top:18px"><button class="btn" id="again">Play again</button></div>
+    </div>
+
+    <div class="panel">
+      <h3>Top players</h3>
+      <div class="flt" id="flt">
+        <button data-b="all" class="on">all</button>
+        <button data-b="easy">easy</button>
+        <button data-b="medium">medium</button>
+        <button data-b="hard">hard</button>
+      </div>
+      <ol class="board" id="board"></ol>
+    </div>
+  </section>
+
+  <section class="view" id="admin" hidden>
+    <div id="adminBody"></div>
+  </section>
+</main>
+<canvas id="conf"></canvas>
+
+<script>
+/* ===== API CONNECTION ===== */
+const API = "/.netlify/functions/api";
+
+async function api(action, options = {}) {
+  const [name, query = ""] = action.split("&", 2);
+const response = await fetch(`${API}?action=${encodeURIComponent(name)}${query ? "&" + query : ""}`, {
+    credentials: "same-origin",
+    ...options
+  });
+
+  const contentType = response.headers.get("content-type") || "";
+  const data = contentType.includes("application/json")
+    ? await response.json()
+    : await response.text();
+
+  if (!response.ok) {
+    throw new Error(data?.error || data || "Request failed");
+  }
+
+  return data;
+}
+
+async function post(action, body) {
+  return api(action, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(body)
+  });
+}
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+const fmt = n => n > 1048576
+  ? (n/1048576).toFixed(1)+" MB"
+  : Math.max(1,Math.round(n/1024))+" KB";
+const r = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
+const sleep = ms => new Promise(res => setTimeout(res, ms));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ===== Intro ===== */
+let entered = false;
+
+function enter(){
+  if(entered) return;
+  entered = true;
+  $("#intro").classList.add("out");
+  go("home");
+}
+
+$("#enter").onclick = enter;
+$("#skip").onclick = enter;
+
+async function typeTo(el, text, ms){
+  for(const c of text){
+    el.textContent += c;
+    await sleep(reduce ? 0 : ms);
+  }
+}
+
+(async () => {
+  for(const line of [
+    "> booting nejashy_academy",
+    "> loading library ... ok",
+    "> loading math_arena ... ok"
+  ]){
+    $("#boot").textContent += line + "\n";
+    await sleep(reduce ? 0 : 380);
+  }
+
+  await sleep(reduce ? 0 : 300);
+  await typeTo($("#t1"), "Make a dua for", 70);
+  $("#c1").hidden = true;
+  $("#c2").hidden = false;
+  await typeTo($("#t2"), "Amir and Yehya", 110);
+  await sleep(reduce ? 0 : 700);
+  $("#enter").classList.add("show");
+  $("#enter").focus();
+})();
+
+(function rain(){
+  const c = $("#rain");
+  const x = c.getContext("2d");
+  const fs = 16;
+  const chars = "01abcdef$#<>/{}=+*";
+  let cols, drops;
+
+  const init = () => {
+    c.width = innerWidth;
+    c.height = innerHeight;
+    cols = Math.ceil(c.width/fs);
+    drops = Array.from({length:cols}, () => Math.random()*-50);
+  };
+
+  init();
+  addEventListener("resize", init);
+
+  (function draw(){
+    if(entered) return;
+
+    x.fillStyle = "rgba(0,0,0,.09)";
+    x.fillRect(0,0,c.width,c.height);
+    x.fillStyle = "#00ff41";
+    x.font = fs + "px monospace";
+
+    for(let i=0;i<cols;i++){
+      x.fillText(chars[r(0,chars.length-1)], i*fs, drops[i]*fs);
+      if(drops[i]*fs > c.height && Math.random() > .975) drops[i] = 0;
+      drops[i]++;
+    }
+
+    if(!reduce) setTimeout(() => requestAnimationFrame(draw), 45);
+  })();
+})();
+
+/* ===== Navigation ===== */
+function go(v){
+  document.querySelectorAll(".view").forEach(s => s.hidden = s.id !== v);
+  document.querySelectorAll("nav button").forEach(b =>
+    b.classList.toggle("on", b.dataset.v === v)
+  );
+
+  if(v === "library") renderLib($("#libList"), false);
+  if(v === "arena") renderBoard();
+  if(v === "admin") renderAdmin();
+
+  scrollTo(0,0);
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-v]");
+  if(b) go(b.dataset.v);
+});
+
+go("home");
+
+/* ===== Library ===== */
+async function renderLib(box, admin){
+  box.innerHTML = '<div class="empty">Loading<i class="blink">_</i></div>';
+
+  try {
+    const data = await api("files");
+
+    if(!data.length){
+      box.innerHTML = '<div class="empty">No files yet.' +
+        (admin ? ' Upload the first one above.' : ' Check back soon.') +
+        '</div>';
+      return;
+    }
+
+    box.innerHTML = '<div class="files">' + data.map((f,i) => {
+      const u = `${API}?action=download&id=${encodeURIComponent(f.id)}`;
+      const t = f.type || "";
+
+      const pv = t.startsWith("image/")
+        ? `<img src="${esc(u)}" alt="" loading="lazy">`
+        : t.startsWith("video/")
+        ? `<video src="${esc(u)}" controls preload="metadata"></video>`
+        : t.startsWith("audio/")
+        ? `<audio src="${esc(u)}" controls></audio>`
+        : "";
+
+      return `<article class="file" style="animation-delay:${i*60}ms">
+        ${pv}
+        <h3>${esc(f.title)}</h3>
+        ${f.note ? `<p>${esc(f.note)}</p>` : ""}
+        <div class="meta">${esc(f.name)} · ${fmt(f.size || 0)}</div>
+        <div class="row">
+          <a class="btn sm" href="${esc(u)}" target="_blank" rel="noopener">Open</a>
+          <a class="btn sm ghost" href="${esc(u)}" download="${esc(f.name)}">Download</a>
+          ${admin ? `<button class="btn sm red" data-del="${esc(f.id)}">Delete</button>` : ""}
+        </div>
+      </article>`;
+    }).join("") + "</div>";
+
+  } catch(err) {
+    box.innerHTML = `<div class="empty bad">Couldn’t load files: ${esc(err.message)}</div>`;
+  }
+}
+
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-del]");
+  if(!b) return;
+
+  if(!confirm("Delete this file for good?")) return;
+
+  try {
+    await post("delete", {id:b.dataset.del});
+    renderLib($("#adminList"), true);
+  } catch(err) {
+    alert("Could not delete file: " + err.message);
+  }
+});
+
+/* ===== Admin ===== */
+async function renderAdmin(){
+  const box = $("#adminBody");
+  box.innerHTML = '<div class="empty">Loading admin panel...</div>';
+
+  let status;
+
+  try {
+    status = await api("check");
+  } catch(err) {
+    box.innerHTML = `<h2>Admin</h2><div class="empty bad">${esc(err.message)}</div>`;
+    return;
+  }
+
+  if(!status.loggedIn){
+    box.innerHTML = `
+      <h2 class="cur">Admin sign in</h2>
+      <p class="muted">Teachers only.</p>
+      <div class="panel">
+        <form id="lf">
+          <label for="pw">Admin password</label>
+          <input type="password" id="pw" autocomplete="current-password" required>
+          <div class="fb bad" id="pwErr"></div>
+          <button class="btn">Sign in</button>
+        </form>
+      </div>`;
+
+    $("#lf").onsubmit = async e => {
+      e.preventDefault();
+      const err = $("#pwErr");
+      err.textContent = "Signing in...";
+
+      try {
+        await post("login", {password:$("#pw").value});
+        renderAdmin();
+      } catch(error) {
+        err.textContent = error.message || "Wrong password. Try again.";
+        $("#pw").classList.add("shake");
+        setTimeout(() => $("#pw").classList.remove("shake"), 400);
+      }
+    };
+
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <h2 class="cur">Admin</h2>
+      <button class="btn sm ghost" id="out">Sign out</button>
+    </div>
+
+    <div class="panel">
+      <h3>Upload files</h3>
+      <form id="uf">
+        <label for="ft">Title</label>
+        <input type="text" id="ft" placeholder="Week 3 worksheet">
+
+        <label for="fd">Note (optional)</label>
+        <textarea id="fd" rows="2"></textarea>
+
+        <label for="ff">Files (any type, pick several)</label>
+        <input type="file" id="ff" multiple required>
+
+        <div class="fb" id="um"></div>
+        <button class="btn">Upload</button>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h3>Leaderboard</h3>
+      <p class="muted">Removes every score for everyone.</p>
+      <button class="btn sm red" id="clr" style="margin-top:10px">Clear leaderboard</button>
+      <div class="fb" id="clearMsg"></div>
+    </div>
+
+    <h3 style="margin-top:30px">Uploaded files</h3>
+    <div id="adminList"></div>`;
+
+  $("#out").onclick = async () => {
+    try {
+      await post("logout", {});
+      renderAdmin();
+    } catch(err) {
+      alert("Sign out failed: " + err.message);
+    }
+  };
+
+  $("#clr").onclick = async () => {
+    if(!confirm("Clear the whole leaderboard?")) return;
+
+    const msg = $("#clearMsg");
+    try {
+      await post("clear", {});
+      msg.className = "fb good";
+      msg.textContent = "Leaderboard cleared.";
+      renderBoard();
+    } catch(err) {
+      msg.className = "fb bad";
+      msg.textContent = "Couldn’t clear: " + err.message;
+    }
+  };
+
+  $("#uf").onsubmit = async e => {
+    e.preventDefault();
+
+    const files = [...$("#ff").files];
+    const m = $("#um");
+    const form = new FormData();
+
+    form.append("title", $("#ft").value.trim());
+    form.append("note", $("#fd").value.trim());
+
+    for(const file of files){
+      form.append("files", file);
+    }
+
+    m.className = "fb";
+    m.textContent = "Uploading...";
+
+    try {
+      const result = await api("upload", {
+        method:"POST",
+        body:form
+      });
+
+      m.className = "fb good";
+      m.textContent = result.message || "Files uploaded successfully.";
+
+      $("#uf").reset();
+      renderLib($("#adminList"), true);
+
+    } catch(err) {
+      m.className = "fb bad";
+      m.textContent = "Upload failed: " + err.message;
+    }
+  };
+
+  renderLib($("#adminList"), true);
+}
+
+/* ===== Math Arena ===== */
+function gen(l){
+  let a,b,op;
+
+  if(l === "easy"){
+    op = ["+","−"][r(0,1)];
+    a = r(1,20);
+    b = r(1,20);
+    if(op === "−" && b > a) [a,b] = [b,a];
+
+  } else if(l === "medium"){
+    op = ["+","−","×"][r(0,2)];
+
+    if(op === "×"){
+      a = r(2,10);
+      b = r(2,10);
+    } else {
+      a = r(10,99);
+      b = r(10,99);
+      if(op === "−" && b > a) [a,b] = [b,a];
+    }
+
+  } else {
+    op = ["×","÷","+"][r(0,2)];
+
+    if(op === "×"){
+      a = r(6,15);
+      b = r(6,15);
+    } else if(op === "÷"){
+      b = r(3,12);
+      a = b*r(3,12);
+    } else {
+      a = r(100,999);
+      b = r(100,999);
+    }
+  }
+
+  const ans = op === "+" ? a+b
+    : op === "−" ? a-b
+    : op === "×" ? a*b
+    : a/b;
+
+  return {q:`${a} ${op} ${b}`, ans};
+}
+
+let level = "easy";
+let G = null;
+let boardLevel = "all";
+
+const TIME = 15000;
+const N = 10;
+
+$("#lv").onclick = e => {
+  const b = e.target.closest("button");
+  if(!b) return;
+
+  level = b.dataset.l;
+
+  document.querySelectorAll("#lv button").forEach(x =>
+    x.classList.toggle("on", x === b)
+  );
+};
+
+$("#flt").onclick = e => {
+  const b = e.target.closest("button");
+  if(b) setBoard(b.dataset.b);
+};
+
+function setBoard(l){
+  boardLevel = l;
+
+  document.querySelectorAll("#flt button").forEach(x =>
+    x.classList.toggle("on", x.dataset.b === l)
+  );
+
+  return renderBoard();
+}
+
+$("#start").onclick = () => {
+  const name = $("#pname").value.trim();
+
+  if(!name){
+    $("#nameErr").textContent = "Type your name to start.";
+    $("#pname").focus();
+    return;
+  }
+
+  $("#nameErr").textContent = "";
+
+  G = {
+    name,
+    level,
+    i:0,
+    score:0,
+    streak:0,
+    best:0,
+    right:0,
+    raf:0,
+    lock:false
+  };
+
+  $("#setup").hidden = true;
+  $("#result").hidden = true;
+  $("#game").hidden = false;
+
+  next();
+};
+
+$("#again").onclick = () => {
+  $("#result").hidden = true;
+  $("#setup").hidden = false;
+};
+
+function next(){
+  if(G.i >= N) return finish();
+
+  G.cur = gen(G.level);
+  G.i++;
+  G.lock = false;
+  G.t0 = performance.now();
+
+  $("#hq").textContent = `Question ${G.i} of ${N}`;
+
+  const q = $("#q");
+  q.textContent = G.cur.q;
+  q.style.animation = "none";
+  q.offsetHeight;
+  q.style.animation = "";
+
+  $("#fb").textContent = "";
+  $("#ans").value = "";
+  $("#ans").focus();
+
+  hud();
+  tick();
+}
+
+function hud(){
+  $("#hs").textContent = G.score + " pts";
+  $("#hk").textContent = G.streak > 1 ? "streak x" + G.streak : "";
+}
+
+function tick(){
+  cancelAnimationFrame(G.raf);
+
+  const loop = () => {
+    const left = Math.max(0, 1 - (performance.now() - G.t0)/TIME);
+    const bar = $("#tb");
+
+    bar.style.transform = `scaleX(${left})`;
+    bar.style.background = left < .3 ? "var(--red)" : "var(--g)";
+
+    if(left <= 0 && !G.lock) return answer(null);
+
+    if(!G.lock) G.raf = requestAnimationFrame(loop);
+  };
+
+  loop();
+}
+
+$("#f").onsubmit = e => {
+  e.preventDefault();
+
+  if(!G.lock && $("#ans").value !== ""){
+    answer(+$("#ans").value);
+  }
+};
+
+function answer(v){
+  G.lock = true;
+  cancelAnimationFrame(G.raf);
+
+  const fb = $("#fb");
+  const panel = $("#game");
+
+  if(v === G.cur.ans){
+    const left = Math.max(0, 1 - (performance.now()-G.t0)/TIME);
+
+    G.streak++;
+    G.best = Math.max(G.best, G.streak);
+    G.right++;
+
+    const pts = 100 + Math.round(left*50) + (G.streak-1)*10;
+    G.score += pts;
+
+    fb.className = "fb good";
+    fb.textContent = "Correct! +" + pts;
+
+    panel.classList.remove("flash");
+    panel.offsetHeight;
+    panel.classList.add("flash");
+
+  } else {
+    G.streak = 0;
+    fb.className = "fb bad";
+
+    fb.textContent = (v === null ? "Time’s up. " : "Not quite. ") +
+      "The answer was " + G.cur.ans;
+
+    panel.classList.remove("shake");
+    panel.offsetHeight;
+    panel.classList.add("shake");
+  }
+
+  hud();
+  setTimeout(next, 1100);
+}
+
+async function finish(){
+  $("#game").hidden = true;
+  $("#result").hidden = false;
+
+  $("#rt").textContent = G.right >= 9
+    ? "Outstanding, " + G.name + "!"
+    : G.right >= 6
+    ? "Great work, " + G.name + "!"
+    : "Good effort, " + G.name + ". Try again!";
+
+  const el = $("#rs");
+  const t0 = performance.now();
+
+  (function up(t){
+    const p = Math.min(1,(t-t0)/1400);
+    el.textContent = Math.round(G.score*(1-Math.pow(1-p,3)));
+    if(p < 1) requestAnimationFrame(up);
+  })(t0);
+
+  if(G.right >= 6 && !reduce) confetti();
+
+  const base = `${G.right} of ${N} correct · best streak ${G.best}`;
+  $("#rd").textContent = base + " · saving score...";
+
+  try {
+    await post("score", {
+      name:G.name,
+      score:G.score,
+      level:G.level
+    });
+
+    const top = await setBoard(G.level);
+
+    const rank = (top || []).findIndex(x =>
+      x.name === G.name && x.score === G.score
+    ) + 1;
+
+    $("#rd").textContent = base +
+      (rank ? ` · rank #${rank} in ${G.level}` : " · score saved");
+
+  } catch(err) {
+    $("#rd").textContent = base + " · couldn’t save score: " + err.message;
+  }
+}
+
+async function renderBoard(){
+  const ol = $("#board");
+
+  ol.innerHTML = '<li style="display:block;border:0">Loading leaderboard...</li>';
+
+  try {
+    const data = await api("scores&level=" + encodeURIComponent(boardLevel));
+
+    ol.innerHTML = data.length
+      ? data.map(x => `<li>
+          <span class="n">${esc(x.name)}</span>
+          <span class="tag">${esc(x.level)}</span>
+          <span class="s">${Number(x.score) || 0}</span>
+        </li>`).join("")
+      : '<li style="display:block;border:0">No scores yet. Be the first!</li>';
+
+    return data;
+
+  } catch(err) {
+    ol.innerHTML = `<li style="display:block;border:0" class="bad">Couldn’t load leaderboard: ${esc(err.message)}</li>`;
+    return [];
+  }
+}
+
+function confetti(){
+  const c = $("#conf");
+  const x = c.getContext("2d");
+
+  c.width = innerWidth;
+  c.height = innerHeight;
+
+  const cols = ["#00ff41","#7dffa6","#b6ffcb","#ffffff"];
+
+  const P = Array.from({length:140}, () => ({
+    x:innerWidth/2,
+    y:innerHeight/2,
+    vx:(Math.random()-.5)*16,
+    vy:Math.random()*-14-3,
+    s:Math.random()*8+4,
+    c:cols[r(0,3)],
+    a:Math.random()*6
+  }));
+
+  const t0 = performance.now();
+
+  (function f(t){
+    x.clearRect(0,0,c.width,c.height);
+
+    for(const p of P){
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += .35;
+      p.a += .2;
+
+      x.fillStyle = p.c;
+      x.save();
+      x.translate(p.x,p.y);
+      x.rotate(p.a);
+      x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);
+      x.restore();
+    }
+
+    if(t-t0 < 3000) requestAnimationFrame(f);
+    else x.clearRect(0,0,c.width,c.height);
+  })(t0);
+}
+</script>
+</body>
+</html>
