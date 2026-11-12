@@ -236,6 +236,14 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
 .players div{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
 .players img,.players .av{width:72px;height:72px;font-size:1.6rem}
 .players b{font-size:.86rem;word-break:break-word}
+.pdet{display:flex;gap:4px;width:100%}
+.pdet input{min-width:0;flex:1;padding:.35em .5em;font-size:.82rem;border-radius:8px}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);padding:12px 0;flex-wrap:wrap}
+.arow:first-child{margin-top:14px}
+.arow b{display:block;color:var(--navy)}
+.arow .muted{font-size:.86rem}
+.cmt .x{border:0;background:none;color:var(--dim);cursor:pointer;margin-left:6px;font-size:.8rem}
+.mod{margin-left:auto}
 
 /* ===== Student platform ===== */
 .split{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start}
@@ -1221,6 +1229,11 @@ $("#camCtl").onclick = e => {
 })();
 
 /* ===== Admin ===== */
+/* Teacher tool constants (used by the admin panel below). */
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const KIND_NAME = {test:"Test", assignment:"Assignment", event:"Event", holiday:"Holiday"};
+const forWho = x => x.grade ? `Grade ${esc(x.grade)}${x.section ? " " + esc(x.section) : ""}` : "Everyone";
+
 async function renderAdmin(){
   const box = $("#adminBody");
   box.innerHTML = '<div class="empty">Loading admin panel<i class="blink">_</i></div>';
@@ -1283,8 +1296,83 @@ async function renderAdmin(){
     </div>
 
     <div class="panel">
+      <h3>Announcements</h3>
+      <form id="anf">
+        <label for="anT">Title</label>
+        <input type="text" id="anT" maxlength="120" required placeholder="Sports day is on Friday">
+        <label for="anB">Message</label>
+        <textarea id="anB" rows="3" maxlength="4000"></textarea>
+        <div class="grid2">
+          <div><label for="anG">Grade (blank = everyone)</label><input type="text" id="anG" maxlength="12" placeholder="e.g. 9"></div>
+          <div><label for="anS">Section (blank = all)</label><input type="text" id="anS" maxlength="12" placeholder="e.g. B"></div>
+        </div>
+        <label class="row" style="font-weight:600"><input type="checkbox" id="anP"> Pin to the top</label>
+        <div class="fb" id="anM"></div>
+        <button class="btn">Post announcement</button>
+      </form>
+      <div id="anList"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Weekly classes</h3>
+      <p class="muted">Students see the classes for their own grade and section on their timetable.</p>
+      <form id="clf">
+        <div class="grid2">
+          <div><label for="clD">Day</label><select id="clD">${DAYS.slice(0,5).map((d,i)=>`<option value="${i+1}">${d}</option>`).join("")}</select></div>
+          <div><label for="clSub">Subject</label><input type="text" id="clSub" maxlength="60" required placeholder="Mathematics"></div>
+          <div><label for="clSt">Starts</label><input type="time" id="clSt" required></div>
+          <div><label for="clEn">Ends</label><input type="time" id="clEn" required></div>
+          <div><label for="clTe">Teacher (optional)</label><input type="text" id="clTe" maxlength="60"></div>
+          <div><label for="clRo">Room (optional)</label><input type="text" id="clRo" maxlength="30"></div>
+          <div><label for="clG">Grade (blank = everyone)</label><input type="text" id="clG" maxlength="12"></div>
+          <div><label for="clS">Section (blank = all)</label><input type="text" id="clS" maxlength="12"></div>
+        </div>
+        <div class="fb" id="clM"></div>
+        <button class="btn">Add class</button>
+      </form>
+      <div id="clList"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Tests, deadlines and school dates</h3>
+      <form id="itf">
+        <div class="grid2">
+          <div><label for="itK">Type</label><select id="itK"><option value="test">Test</option><option value="assignment">Assignment</option><option value="event">Event</option><option value="holiday">Holiday</option></select></div>
+          <div><label for="itT">Title</label><input type="text" id="itT" maxlength="100" required placeholder="Chapter 4 quiz"></div>
+          <div><label for="itD">Date</label><input type="date" id="itD" required></div>
+          <div><label for="itE">End date (optional)</label><input type="date" id="itE"></div>
+          <div><label for="itTm">Time (optional)</label><input type="time" id="itTm"></div>
+          <div><label for="itSub">Subject (optional)</label><input type="text" id="itSub" maxlength="60"></div>
+          <div><label for="itG">Grade (blank = everyone)</label><input type="text" id="itG" maxlength="12"></div>
+          <div><label for="itS">Section (blank = all)</label><input type="text" id="itS" maxlength="12"></div>
+        </div>
+        <label for="itDt">Details (optional)</label>
+        <textarea id="itDt" rows="2" maxlength="1000"></textarea>
+        <div class="fb" id="itM"></div>
+        <button class="btn">Add date</button>
+      </form>
+      <div id="itList"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Communities</h3>
+      <p class="muted">Clubs and groups students can join.</p>
+      <form id="cmf">
+        <div class="grid2">
+          <div><label for="cmN">Name</label><input type="text" id="cmN" maxlength="60" required placeholder="Chess club"></div>
+          <div><label for="cmI">Icon (an emoji)</label><input type="text" id="cmI" maxlength="8" placeholder="♟️"></div>
+        </div>
+        <label for="cmD">Description</label>
+        <textarea id="cmD" rows="2" maxlength="500"></textarea>
+        <div class="fb" id="cmM"></div>
+        <button class="btn">Add community</button>
+      </form>
+      <div id="cmList"></div>
+    </div>
+
+    <div class="panel">
       <h3>Players</h3>
-      <p class="muted">Reset a player to remove their picture. They keep their scores and add a new photo next time they enter their name.</p>
+      <p class="muted">Set each student's grade and section so they see the right timetable and announcements. Reset a player to remove their picture. They keep their scores and add a new photo next time they enter their name.</p>
       <div id="playerList"></div>
     </div>
 
@@ -1346,9 +1434,98 @@ async function renderAdmin(){
     }
   };
 
+  adminForm("#anf", "#anM", "addAnnouncement", () => ({title:$("#anT").value, body:$("#anB").value, grade:$("#anG").value, section:$("#anS").value, pinned:$("#anP").checked}), "Announcement posted.", renderAdminAnnouncements);
+  adminForm("#clf", "#clM", "addClass", () => ({day:+$("#clD").value, subject:$("#clSub").value, startTime:$("#clSt").value, endTime:$("#clEn").value, teacher:$("#clTe").value, room:$("#clRo").value, grade:$("#clG").value, section:$("#clS").value}), "Class added.", renderAdminTimetable);
+  adminForm("#itf", "#itM", "addItem", () => ({kind:$("#itK").value, title:$("#itT").value, date:$("#itD").value, endDate:$("#itE").value, time:$("#itTm").value, subject:$("#itSub").value, grade:$("#itG").value, section:$("#itS").value, details:$("#itDt").value}), "Date added.", renderAdminTimetable);
+  adminForm("#cmf", "#cmM", "addCommunity", () => ({name:$("#cmN").value, icon:$("#cmI").value, description:$("#cmD").value}), "Community added.", renderAdminCommunities);
+
   renderPlayers();
+  renderAdminAnnouncements();
+  renderAdminTimetable();
+  renderAdminCommunities();
   renderLib($("#adminList"), true);
 }
+
+/* ===== Teacher tools: announcements, timetable, communities ===== */
+
+// Wires up an add-form: sends it, shows the result, clears it and refreshes its list.
+function adminForm(form, msgSel, action, body, done, refresh){
+  $(form).onsubmit = async e => {
+    e.preventDefault();
+    const m = $(msgSel), btn = $(form).querySelector("button");
+    m.className = "fb"; m.textContent = "Saving...";
+    btn.disabled = true;
+    try {
+      await post(action, body());
+      m.className = "fb good"; m.textContent = done;
+      $(form).reset();
+      refresh();
+    } catch(err) {
+      m.className = "fb bad"; m.textContent = err.message;
+    } finally { btn.disabled = false; }
+  };
+}
+
+const adminRow = (main, sub, buttons) => `<div class="arow"><div><b>${main}</b><span class="muted">${sub}</span></div><div class="row">${buttons}</div></div>`;
+const delBtn = (action, id, what, refresh) => `<button class="btn sm red" data-adel="${action}" data-id="${id}" data-what="${esc(what)}" data-refresh="${refresh}">Delete</button>`;
+
+async function adminList(sel, load, draw, empty){
+  const box = $(sel);
+  if(!box) return;
+  try {
+    const list = await load();
+    box.innerHTML = list.length ? list.map(draw).join("") : `<p class="muted" style="margin-top:14px">${empty}</p>`;
+  } catch(err) {
+    box.innerHTML = `<p class="bad" style="margin-top:14px">Couldn’t load: ${esc(err.message)}</p>`;
+  }
+}
+
+function renderAdminAnnouncements(){
+  return adminList("#anList", () => api("adminAnnouncements"), a => adminRow(
+    `${a.pinned ? "📌 " : ""}${esc(a.title)}`,
+    `${forWho(a)} · ${new Date(a.createdAt).toLocaleDateString()}`,
+    `<button class="btn sm ghost" data-apin="${a.id}" data-to="${a.pinned ? 0 : 1}">${a.pinned ? "Unpin" : "Pin"}</button>${delBtn("deleteAnnouncement", a.id, a.title, "an")}`
+  ), "No announcements yet.");
+}
+
+async function renderAdminTimetable(){
+  // One request feeds both lists.
+  const data = api("adminTimetable");
+  data.catch(() => {});
+  adminList("#clList", () => data.then(d => d.classes), c => adminRow(
+    `${esc(c.subject)}`,
+    `${DAYS[c.day - 1]} ${esc(c.startTime)}–${esc(c.endTime)}${c.room ? " · " + esc(c.room) : ""}${c.teacher ? " · " + esc(c.teacher) : ""} · ${forWho(c)}`,
+    delBtn("deleteClass", c.id, c.subject, "tt")
+  ), "No classes yet.");
+  adminList("#itList", () => data.then(d => d.items), i => adminRow(
+    `${KIND_NAME[i.kind] || esc(i.kind)}: ${esc(i.title)}`,
+    `${esc(i.date)}${i.endDate ? " to " + esc(i.endDate) : ""}${i.time ? " " + esc(i.time) : ""}${i.subject ? " · " + esc(i.subject) : ""} · ${forWho(i)}`,
+    delBtn("deleteItem", i.id, i.title, "tt")
+  ), "No dates yet.");
+}
+
+function renderAdminCommunities(){
+  return adminList("#cmList", () => api("communities").then(c => c.communities), c => adminRow(
+    `${esc(c.icon)} ${esc(c.name)}`,
+    `${c.members} members${c.description ? " · " + esc(c.description) : ""}`,
+    delBtn("deleteCommunity", c.id, c.name, "cm")
+  ), "No communities yet.");
+}
+
+const ADMIN_REFRESH = {an:renderAdminAnnouncements, tt:renderAdminTimetable, cm:renderAdminCommunities};
+document.addEventListener("click", async e => {
+  const d = e.target.closest("[data-adel]"), p = e.target.closest("[data-apin]");
+  try {
+    if(d){
+      if(!confirm(`Delete “${d.dataset.what}”?`)) return;
+      await post(d.dataset.adel, {id:+d.dataset.id});
+      ADMIN_REFRESH[d.dataset.refresh]();
+    } else if(p){
+      await post("pinAnnouncement", {id:+p.dataset.apin, pinned:p.dataset.to === "1"});
+      renderAdminAnnouncements();
+    }
+  } catch(err) { toast(err.message); }
+});
 
 async function renderPlayers(){
   const box = $("#playerList");
@@ -1359,6 +1536,7 @@ async function renderPlayers(){
       ? '<div class="players">' + list.map(p => `<div>
           ${avatarHTML(p.avatar, p.name)}
           <b>${esc(p.name)}</b>
+          <form class="pdet" data-pdet="${esc(p.id)}"><input type="text" maxlength="12" placeholder="Grade" aria-label="Grade for ${esc(p.name)}" value="${esc(p.grade || "")}"><input type="text" maxlength="12" placeholder="Sec." aria-label="Section for ${esc(p.name)}" value="${esc(p.section || "")}"><button class="btn sm ghost">Save</button></form>
           ${p.hasAvatar
             ? `<button class="btn sm red" data-reset="${esc(p.id)}" data-name="${esc(p.name)}">Reset photo</button>`
             : '<span class="tag">needs a photo</span>'}
@@ -1368,6 +1546,15 @@ async function renderPlayers(){
     box.innerHTML = `<p class="bad" style="margin-top:10px">Couldn’t load players: ${esc(err.message)}</p>`;
   }
 }
+
+document.addEventListener("submit", async e => {
+  const f = e.target.closest("[data-pdet]");
+  if(!f) return;
+  e.preventDefault();
+  const [grade, section] = [...f.querySelectorAll("input")].map(i => i.value);
+  try { await post("setDetails", {id:f.dataset.pdet, grade, section}); toast("Class saved."); }
+  catch(err) { toast(err.message); }
+});
 
 document.addEventListener("click", async e => {
   const b = e.target.closest("[data-reset]");
@@ -1669,18 +1856,45 @@ async function renderFeed(){
   const box = $("#feedList");
   box.innerHTML = '<div class="skel"></div>';
   try {
-    const [{items}, h] = await Promise.all([api("feed"), api("highlights")]);
+    const [{items}, h, chk] = await Promise.all([api("feed"), api("highlights"), api("check").catch(() => ({}))]);
+    teacher = !!chk.loggedIn;
     box.innerHTML = items.length ? items.map(a => `<article class="post">
       <div class="who">${avatarHTML(a.student.avatar, a.student.name)}<b>${esc(a.student.name)}</b><span class="muted" style="font-size:.8rem">${new Date(a.sharedAt).toLocaleDateString()}</span></div>
       <div class="ach"><span class="ai">${esc(a.icon)}</span><div><b>${esc(a.title)}</b><span class="muted">${esc(a.detail)}</span></div>${a.value!=null?`<span class="val">${a.value}</span>`:""}</div>
-      <div class="acts"><button class="tool ${a.cheered?"on":""}" data-cheer="${a.id}" data-on="${a.cheered?0:1}">👏 ${a.cheers}</button><span class="muted">💬 ${a.comments}</span></div>
-      <div class="cmts">${a.preview.map(c => `<div class="cmt"><b>${esc(c.name)}</b> ${esc(c.body)}</div>`).join("")}</div>
+      <div class="acts"><button class="tool ${a.cheered?"on":""}" data-cheer="${a.id}" data-on="${a.cheered?0:1}">👏 ${a.cheers}</button>${a.comments > a.preview.length ? `<button class="tool" data-allc="${a.id}">💬 ${a.comments} · see all</button>` : `<span class="muted">💬 ${a.comments}</span>`}${teacher ? `<button class="btn sm red mod" data-hide="${a.id}">Hide post</button>` : ""}</div>
+      <div class="cmts" id="cmts${a.id}">${a.preview.map(cmtHTML).join("")}</div>
       ${signedIn()?`<form class="cform" data-cform="${a.id}"><input type="text" maxlength="280" placeholder="Say something nice"><button class="btn sm">Send</button></form>`:""}
     </article>`).join("") : '<div class="empty">Nothing shared yet. Earn an achievement in the Game Hub or Focus Hub and share it!</div>';
     const mini = (l, f) => l.length ? `<ul class="mini">${l.map(x => `<li>${avatarHTML(x.avatar,x.name)}<span class="n">${esc(x.name)}</span><span class="s">${f(x)}</span></li>`).join("")}</ul>` : '<p class="muted">No one yet.</p>';
     $("#feedSide").innerHTML = `<div class="panel" style="margin-top:0"><h3>This week</h3><p class="muted">${h.focusingNow} focusing right now</p><b>Top focus</b>${mini(h.focusTop,x=>x.minutes+"m")}<b style="display:block;margin-top:12px">Top scores</b>${mini(h.gameTop,x=>x.score)}</div>`;
   } catch(err){ fail(box, err); }
 }
+// Teachers can remove any comment; students can remove their own.
+let teacher = false;
+const cmtHTML = c => {
+  const who = c.student ? c.student.id : c.playerId, name = c.student ? c.student.name : c.name;
+  const own = me && me.id === who;
+  return `<div class="cmt"><b>${esc(name)}</b> ${esc(c.body)}${teacher || own ? `<button class="x" data-cdel="${c.id}" data-own="${own && !teacher ? 1 : 0}" aria-label="Delete comment" title="Delete comment">✕</button>` : ""}</div>`;
+};
+document.addEventListener("click", async e => {
+  const all = e.target.closest("[data-allc]"), del = e.target.closest("[data-cdel]"), hide = e.target.closest("[data-hide]");
+  if(!all && !del && !hide) return;
+  try {
+    if(all){
+      const list = await api("comments", {}, {id:all.dataset.allc});
+      $("#cmts" + all.dataset.allc).innerHTML = list.map(cmtHTML).join("");
+      all.outerHTML = `<span class="muted">💬 ${list.length}</span>`;
+    } else if(del){
+      if(!confirm("Delete this comment?")) return;
+      await post(del.dataset.own === "1" ? "deleteComment" : "adminDeleteComment", {id:+del.dataset.cdel});
+      renderFeed();
+    } else {
+      if(!confirm("Hide this post from the feed?")) return;
+      await post("hideAchievement", {id:+hide.dataset.hide, hidden:true});
+      renderFeed();
+    }
+  } catch(err){ toast(err.message); }
+});
 document.addEventListener("click", async e => {
   const b = e.target.closest("[data-cheer]");
   if(!b) return;
