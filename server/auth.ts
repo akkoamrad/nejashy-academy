@@ -7,23 +7,43 @@ import { and, eq } from "drizzle-orm";
 import { db } from "../db/index.js";
 import { players, deviceKeys } from "../db/schema.js";
 import { hashKey, safeEqual, validId } from "./http.js";
+import type { Stores } from "./stores.js";
 
 /* ===== Teachers ===== */
-const secret = () => process.env.SESSION_SECRET || "";
-const sign = (value: string) => crypto.createHmac("sha256", secret()).update(value).digest("hex");
+// The signing key comes from SESSION_SECRET when it is set. Otherwise a random key
+// is created once and kept in the private "academy-system" blob store, so admin
+// login works without any extra setup. The admin password is mixed in, so changing
+// the password signs every existing admin session out.
+let cachedKey = "";
+async function signingKey(s: Stores) {
+  if (cachedKey) return cachedKey;
+  let base = process.env.SESSION_SECRET || "";
+  if (!base) {
+    base = (await s.system.get("session-secret")) || "";
+    if (!base) {
+      await s.system.set("session-secret", crypto.randomBytes(32).toString("hex"), { onlyIfNew: true });
+      base = (await s.system.get("session-secret")) || "";
+    }
+  }
+  if (!base) throw new Error("Could not load the session key.");
+  const pw = crypto.createHash("sha256").update(process.env.ADMIN_PASSWORD || "").digest("hex");
+  cachedKey = base + ":" + pw;
+  return cachedKey;
+}
+const sign = (key: string, value: string) => crypto.createHmac("sha256", key).update(value).digest("hex");
 
-export function makeSession() {
+export async function makeSession(s: Stores) {
   const data = JSON.stringify({ admin: true, expires: Date.now() + 7 * 24 * 60 * 60 * 1000 });
   const encoded = Buffer.from(data).toString("base64url");
-  return encoded + "." + sign(encoded);
+  return encoded + "." + sign(await signingKey(s), encoded);
 }
 
-export function isAdmin(req: Request) {
-  if (!secret()) return false;
+export async function isAdmin(req: Request, s: Stores) {
+  if (!adminConfigured()) return false;
   const match = (req.headers.get("cookie") || "").match(/academy_session=([^;]+)/);
   if (!match) return false;
   const [encoded, signature] = match[1].split(".");
-  if (!encoded || !signature || !safeEqual(signature, sign(encoded))) return false;
+  if (!encoded || !signature || !safeEqual(signature, sign(await signingKey(s), encoded))) return false;
   try {
     const data = JSON.parse(Buffer.from(encoded, "base64url").toString());
     return data.admin === true && data.expires > Date.now();
@@ -32,7 +52,7 @@ export function isAdmin(req: Request) {
   }
 }
 
-export const adminConfigured = () => !!(process.env.ADMIN_PASSWORD && secret());
+export const adminConfigured = () => !!process.env.ADMIN_PASSWORD;
 
 /* ===== Students ===== */
 export type Player = typeof players.$inferSelect;

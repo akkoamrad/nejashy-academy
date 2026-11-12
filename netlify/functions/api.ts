@@ -34,11 +34,11 @@ const PUBLIC_GET: Record<string, Handler> = {
 const PUBLIC_POST: Record<string, Handler> = {
   selfie: c => players.selfie(c.b, c.s),
   linkDevice: c => players.redeemLinkCode(c.b),
-  login: c => {
+  login: async c => {
     if (!adminConfigured()) return json({ error: "Admin login is not configured." }, 500);
     if (!safeEqual(String(c.b.password || ""), process.env.ADMIN_PASSWORD || "")) return json({ error: "Incorrect password." }, 401);
     return json({ ok: true }, 200, {
-      "Set-Cookie": `academy_session=${makeSession()}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=604800`,
+      "Set-Cookie": `academy_session=${await makeSession(c.s)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=604800`,
     });
   },
   logout: () => json({ ok: true }, 200, {
@@ -107,7 +107,7 @@ export default async function handler(req: Request) {
     const GET = req.method === "GET", POST = req.method === "POST";
     if (NEEDS_IMPORT.has(action)) await players.importLegacy(s);
 
-    const admin = isAdmin(req);
+    const admin = await isAdmin(req, s);
     const isUpload = action === "upload";
     const b = POST && !isUpload ? await req.json().catch(() => ({})) : {};
     const ctx: Ctx = { req, url, s, b, admin, me: null };

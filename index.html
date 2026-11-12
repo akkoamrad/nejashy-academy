@@ -53,19 +53,17 @@ button:disabled{cursor:not-allowed;opacity:.55}
 .btn.icon{padding:.6em;border-radius:50%;width:46px;height:46px}
 .spin{width:1em;height:1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
 
-/* ===== Intro ===== */
-#intro{position:fixed;inset:0;z-index:50;background:var(--navy);display:grid;place-items:center;padding:24px;transition:opacity .9s,visibility .9s}
-#intro.out{opacity:0;visibility:hidden}
-#rain{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
-.intro-in{position:relative;padding:40px 28px;background:radial-gradient(closest-side,rgba(11,42,107,.95) 60%,transparent);max-width:100%;color:#fff}
-#boot{color:#9dbcff;font:500 .9rem/1.6 var(--mono);white-space:pre;min-height:4.8em}
-.l1{font:500 clamp(1.3rem,5vw,2.2rem) var(--display);color:#dbe7ff;margin-top:18px;min-height:1.4em}
-.l2{font:800 clamp(2rem,9vw,5rem)/1.1 var(--display);color:#fff;min-height:1.2em;word-break:break-word;letter-spacing:-.03em}
-#enter{margin-top:28px;visibility:hidden;background:#fff;color:var(--navy)}
-#enter:hover{background:var(--sky)}
-#enter.show{visibility:visible;animation:in .6s}
-#skip{position:fixed;right:18px;bottom:18px;z-index:55;background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
-#intro.out ~ #skip{display:none}
+/* ===== Daily dua popup ===== */
+#dua{position:fixed;top:14px;left:50%;z-index:60;transform:translateX(-50%);width:min(560px,calc(100vw - 24px));display:flex;align-items:center;gap:14px;padding:14px 14px 14px 18px;border-radius:16px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;box-shadow:0 18px 40px -12px rgba(11,42,107,.55);animation:duaIn .5s cubic-bezier(.2,.9,.3,1.2)}
+#dua[hidden]{display:none}
+#dua.out{animation:duaOut .3s forwards}
+#dua .di{font-size:1.7rem;line-height:1}
+#dua p{margin:0;flex:1;font:700 1.05rem/1.35 var(--display);letter-spacing:-.01em;color:#fff}
+#dua p span{display:block;font:500 .8rem var(--sans);color:#c9dbff;letter-spacing:0;margin-top:2px}
+#dua button{flex:none;width:34px;height:34px;border-radius:50%;color:#fff;background:rgba(255,255,255,.14);font-size:1.2rem;line-height:1;display:grid;place-items:center}
+#dua button:hover{background:rgba(255,255,255,.28)}
+@keyframes duaIn{from{opacity:0;transform:translate(-50%,-24px)}}
+@keyframes duaOut{to{opacity:0;transform:translate(-50%,-24px)}}
 
 /* ===== Layout ===== */
 header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
@@ -254,6 +252,14 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
 .post .who{display:flex;align-items:center;gap:10px}
 .post .who b{color:var(--navy)}
 .who button{padding:0;text-align:left}
+[data-stu]{cursor:pointer}
+button[data-stu]{font:inherit;color:inherit;background:none;border:0;padding:0;text-align:left}
+button[data-stu]:hover .nm,button[data-stu]:hover b,button[data-stu]:hover .n{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.sprof{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sprof img,.sprof .av{width:72px;height:72px;font-size:1.8rem;border-radius:50%;object-fit:cover}
+.bests{list-style:none;padding:0;margin:10px 0 0}
+.bests li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.94rem}
+.bests li b{color:var(--blue)}
 .ach{display:flex;gap:14px;align-items:center;margin:14px 0 10px;padding:14px;border-radius:14px;background:linear-gradient(135deg,var(--sky),#fff);border:1px solid var(--line)}
 .ach .ai{font-size:2rem;width:56px;height:56px;display:grid;place-items:center;background:#fff;border-radius:14px;flex:none;box-shadow:0 0 0 1px var(--line2)}
 .ach b{display:block;font-family:var(--display);color:var(--navy);font-size:1.08rem;line-height:1.25}
@@ -335,16 +341,11 @@ select,input[type=date],input[type=time]{width:100%;font:inherit;padding:.7em .9
 </head>
 <body>
 
-<div id="intro">
-  <canvas id="rain" aria-hidden="true"></canvas>
-  <div class="intro-in">
-    <div id="boot"></div>
-    <div class="l1"><span id="t1"></span><i class="blink" id="c1">_</i></div>
-    <div class="l2"><span id="t2"></span><i class="blink" id="c2" hidden>_</i></div>
-    <button class="btn" id="enter">Enter</button>
-  </div>
+<div id="dua" role="status" aria-live="polite" hidden>
+  <span class="di" aria-hidden="true">🤲</span>
+  <p>Make a dua for Amir and Yehya<span>A reminder, once a day</span></p>
+  <button type="button" id="duaX" aria-label="Close">×</button>
 </div>
-<button class="btn ghost sm" id="skip">Skip</button>
 
 <header>
   <div class="hwrap">
@@ -637,19 +638,21 @@ const avatarHTML = (src, name, cls = "av") => src
   ? `<img class="${cls}" src="${esc(src)}" alt="" loading="lazy">`
   : `<span class="${cls}">${esc((name || "?").charAt(0).toUpperCase())}</span>`;
 
-/* ===== Intro ===== */
-let entered = false;
-
-function enter(){
-  if(entered) return;
-  entered = true;
-  $("#intro").classList.add("out");
-  termType();
-}
-
-$("#enter").onclick = enter;
-$("#skip").onclick = enter;
-addEventListener("keydown", e => { if(e.key === "Escape") enter(); });
+/* ===== Daily dua popup ===== */
+// Shown once per calendar day on each device.
+(function dua(){
+  const d = new Date(), today = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+  let seen = "";
+  try { seen = localStorage.getItem("duaSeen") || ""; localStorage.setItem("duaSeen", today); } catch {}
+  if(seen === today) return;
+  const box = $("#dua");
+  box.hidden = false;
+  $("#duaX").onclick = () => {
+    if(reduce) return void (box.hidden = true);
+    box.classList.add("out");
+    box.addEventListener("animationend", () => { box.hidden = true; }, {once:true});
+  };
+})();
 
 async function typeTo(el, text, ms){
   for(const c of text){
@@ -657,45 +660,6 @@ async function typeTo(el, text, ms){
     await sleep(reduce ? 0 : ms);
   }
 }
-
-(async () => {
-  for(const line of ["> starting nejashy academy","> loading library ... ok","> loading math arena ... ok"]){
-    $("#boot").textContent += line + "\n";
-    await sleep(reduce ? 0 : 380);
-  }
-  await sleep(reduce ? 0 : 300);
-  await typeTo($("#t1"), "Make a dua for", 70);
-  $("#c1").hidden = true;
-  $("#c2").hidden = false;
-  await typeTo($("#t2"), "Amir and Yehya", 110);
-  await sleep(reduce ? 0 : 700);
-  $("#enter").classList.add("show");
-  if(!entered) $("#enter").focus();
-})();
-
-(function rain(){
-  const c = $("#rain"), x = c.getContext("2d"), fs = 16, chars = "0123456789+−×÷=";
-  let cols, drops;
-  const init = () => {
-    c.width = innerWidth; c.height = innerHeight;
-    cols = Math.ceil(c.width/fs);
-    drops = Array.from({length:cols}, () => Math.random()*-50);
-  };
-  init();
-  addEventListener("resize", init);
-  (function draw(){
-    if(entered) return removeEventListener("resize", init);
-    x.fillStyle = "rgba(11,42,107,.12)"; x.fillRect(0,0,c.width,c.height);
-    x.font = fs + "px monospace";
-    for(let i=0;i<cols;i++){
-      x.fillStyle = Math.random() > .9 ? "#ffffff" : "#6f9bff";
-      x.fillText(chars[r(0,chars.length-1)], i*fs, drops[i]*fs);
-      if(drops[i]*fs > c.height && Math.random() > .975) drops[i] = 0;
-      drops[i]++;
-    }
-    if(!reduce) setTimeout(() => requestAnimationFrame(draw), 45);
-  })();
-})();
 
 let termDone = false;
 async function termType(){
@@ -707,6 +671,7 @@ async function termType(){
     await sleep(reduce ? 0 : 160);
   }
 }
+termType();
 
 /* ===== Navigation ===== */
 let current = "home";
@@ -1780,7 +1745,7 @@ async function renderBoard(){
 
     const top3 = data.slice(0,3);
     if(top3.length === 3){
-      const slot = (x, cls, n) => `<div class="${cls}">${avatarHTML(x.avatar, x.name)}
+      const slot = (x, cls, n) => `<div class="${cls}" data-stu="${esc(x.playerId)}" tabindex="0" role="button" aria-label="View ${esc(x.name)}’s profile">${avatarHTML(x.avatar, x.name)}
         <span class="nm">${esc(x.name)}</span><span class="sc">${Number(x.score)||0}</span>
         <span class="base">${n}</span></div>`;
       pod.innerHTML = `<div class="podium">${slot(top3[1],"p2",2)}${slot(top3[0],"p1",1)}${slot(top3[2],"p3",3)}</div>`;
@@ -1788,7 +1753,7 @@ async function renderBoard(){
 
     const rest = top3.length === 3 ? data.slice(3) : data;
     const offset = top3.length === 3 ? 3 : 0;
-    ol.innerHTML = rest.map((x,i) => `<li class="${mine(x) ? "me" : ""}" style="animation-delay:${i*40}ms">
+    ol.innerHTML = rest.map((x,i) => `<li class="${mine(x) ? "me" : ""}" style="animation-delay:${i*40}ms" data-stu="${esc(x.playerId)}" tabindex="0" role="button" aria-label="View ${esc(x.name)}’s profile">
         <span class="rk">#${i+1+offset}</span>
         ${avatarHTML(x.avatar, x.name)}
         <span class="n">${esc(x.name)}</span>
@@ -1859,13 +1824,13 @@ async function renderFeed(){
     const [{items}, h, chk] = await Promise.all([api("feed"), api("highlights"), api("check").catch(() => ({}))]);
     teacher = !!chk.loggedIn;
     box.innerHTML = items.length ? items.map(a => `<article class="post">
-      <div class="who">${avatarHTML(a.student.avatar, a.student.name)}<b>${esc(a.student.name)}</b><span class="muted" style="font-size:.8rem">${new Date(a.sharedAt).toLocaleDateString()}</span></div>
+      <div class="who"><button type="button" data-stu="${esc(a.student.id)}" class="who" aria-label="View ${esc(a.student.name)}’s profile">${avatarHTML(a.student.avatar, a.student.name)}<b>${esc(a.student.name)}</b></button><span class="muted" style="font-size:.8rem">${new Date(a.sharedAt).toLocaleDateString()}</span></div>
       <div class="ach"><span class="ai">${esc(a.icon)}</span><div><b>${esc(a.title)}</b><span class="muted">${esc(a.detail)}</span></div>${a.value!=null?`<span class="val">${a.value}</span>`:""}</div>
       <div class="acts"><button class="tool ${a.cheered?"on":""}" data-cheer="${a.id}" data-on="${a.cheered?0:1}">👏 ${a.cheers}</button>${a.comments > a.preview.length ? `<button class="tool" data-allc="${a.id}">💬 ${a.comments} · see all</button>` : `<span class="muted">💬 ${a.comments}</span>`}${teacher ? `<button class="btn sm red mod" data-hide="${a.id}">Hide post</button>` : ""}</div>
       <div class="cmts" id="cmts${a.id}">${a.preview.map(cmtHTML).join("")}</div>
       ${signedIn()?`<form class="cform" data-cform="${a.id}"><input type="text" maxlength="280" placeholder="Say something nice"><button class="btn sm">Send</button></form>`:""}
     </article>`).join("") : '<div class="empty">Nothing shared yet. Earn an achievement in the Game Hub or Focus Hub and share it!</div>';
-    const mini = (l, f) => l.length ? `<ul class="mini">${l.map(x => `<li>${avatarHTML(x.avatar,x.name)}<span class="n">${esc(x.name)}</span><span class="s">${f(x)}</span></li>`).join("")}</ul>` : '<p class="muted">No one yet.</p>';
+    const mini = (l, f) => l.length ? `<ul class="mini">${l.map(x => `<li data-stu="${esc(x.playerId)}" tabindex="0" role="button" aria-label="View ${esc(x.name)}’s profile">${avatarHTML(x.avatar,x.name)}<span class="n">${esc(x.name)}</span><span class="s">${f(x)}</span></li>`).join("")}</ul>` : '<p class="muted">No one yet.</p>';
     $("#feedSide").innerHTML = `<div class="panel" style="margin-top:0"><h3>This week</h3><p class="muted">${h.focusingNow} focusing right now</p><b>Top focus</b>${mini(h.focusTop,x=>x.minutes+"m")}<b style="display:block;margin-top:12px">Top scores</b>${mini(h.gameTop,x=>x.score)}</div>`;
   } catch(err){ fail(box, err); }
 }
@@ -1981,8 +1946,8 @@ async function renderCommunity(){
   try {
     const [ann, c] = await Promise.all([api("announcements"), api("communities")]);
     box.innerHTML = `<h3 style="margin-top:20px">Announcements</h3>${ann.map(a => `<div class="ann ${a.pinned?"pin":""}"><b>${a.pinned?"📌 ":""}${esc(a.title)}</b><p>${esc(a.body)}</p><span class="muted" style="font-size:.8rem">${new Date(a.createdAt).toLocaleDateString()}</span></div>`).join("") || '<p class="muted">No announcements.</p>'}
-      <h3 style="margin-top:30px">Clubs and groups</h3><div class="coms">${c.myClass?`<div class="com"><span class="ci">🏫</span><b>Grade ${esc(c.myClass.grade)}${c.myClass.section?" "+esc(c.myClass.section):""}</b><span class="muted">Your class · ${c.myClass.members} students</span></div>`:""}
-      ${c.communities.map(x => `<div class="com"><span class="ci">${esc(x.icon)}</span><b>${esc(x.name)}</b><span class="muted">${esc(x.description)}</span><span class="muted" style="font-size:.85rem">${x.members} members</span><div class="row">${signedIn()?`<button class="btn sm ${x.joined?"ghost":""}" data-join="${x.id}" data-to="${x.joined?0:1}">${x.joined?"Leave":"Join"}</button>`:""}</div></div>`).join("")}</div>
+      <h3 style="margin-top:30px">Clubs and groups</h3><div class="coms">${c.myClass?`<div class="com"><span class="ci">🏫</span><b>Grade ${esc(c.myClass.grade)}${c.myClass.section?" "+esc(c.myClass.section):""}</b><span class="muted">Your class · ${c.myClass.members} students</span><div class="row"><button class="btn sm ghost" data-com="class">Members</button></div></div>`:""}
+      ${c.communities.map(x => `<div class="com"><span class="ci">${esc(x.icon)}</span><b>${esc(x.name)}</b><span class="muted">${esc(x.description)}</span><span class="muted" style="font-size:.85rem">${x.members} members</span><div class="row"><button class="btn sm ghost" data-com="${x.id}">Members</button>${signedIn()?`<button class="btn sm ${x.joined?"ghost":""}" data-join="${x.id}" data-to="${x.joined?0:1}">${x.joined?"Leave":"Join"}</button>`:""}</div></div>`).join("")}</div>
       ${!c.communities.length && !c.myClass ? '<p class="muted">No groups yet.</p>' : ""}`;
   } catch(err){ fail(box, err); }
 }
@@ -2000,6 +1965,7 @@ async function renderProfile(){
     const p = d.profile;
     box.innerHTML = `<div class="profhead">${avatarHTML(p.avatar,p.name,"")}<div><div class="kicker">My profile</div><h2>${esc(p.name)}</h2><span class="muted">${p.grade?`Grade ${esc(p.grade)} ${esc(p.section||"")}`:"No grade set"}</span></div></div>
       <div class="stats"><div class="stat"><b>${d.focus.totalMinutes}m</b><span>focus time</span></div><div class="stat"><b>${d.focus.streak}</b><span>day streak</span></div><div class="stat"><b>${d.achievements.length}</b><span>achievements</span></div></div>
+      <div class="panel" style="margin-top:20px"><h3>Game bests</h3>${bestsHTML(d.bests, true)}</div>
       <div class="grid2"><div class="panel"><h3>Achievements</h3>${d.achievements.map(a => `<div class="ach"><span class="ai">${esc(a.icon)}</span><div><b>${esc(a.title)}</b><span class="muted">${esc(a.detail)}</span></div>${a.shared?'<span class="tag">shared</span>':`<button class="btn sm" data-share="${a.id}">Share</button>`}</div>`).join("") || '<p class="muted">Play a round or finish a focus session to earn one.</p>'}</div>
       <div><div class="panel" style="margin-top:20px"><h3>Account</h3><form id="df" class="form"><div><label>Grade</label><input type="text" id="dg" maxlength="12" value="${esc(p.grade||"")}"></div><div><label>Section</label><input type="text" id="ds" maxlength="12" value="${esc(p.section||"")}"></div><div class="full"><button class="btn" style="margin-top:14px">Save</button></div></form></div>
       <div class="panel"><h3>Link a new device</h3><p class="muted">Get a code to sign in on another phone or computer.</p><div id="lcOut"></div><button class="btn ghost" id="lcGo" style="margin-top:10px">Link a new device</button></div></div></div>`;
@@ -2008,6 +1974,49 @@ async function renderProfile(){
   } catch(err){ fail(box, err); }
 }
 $("#dlgX").onclick = () => $("#dlg").close();
+
+/* ===== Game bests, student profiles and community members ===== */
+const GAME_NAMES = {arena:"🧮 Math Arena", patterns:"🧩 Pattern Pro"};
+const LEVEL_ORDER = {easy:0, medium:1, hard:2};
+function bestsHTML(list, mineView){
+  if(!list || !list.length) return `<p class="muted">${mineView ? "Play a round in the Game Hub to set your first best score." : "No games played yet."}</p>`;
+  const rows = [...list].sort((a,b) => String(a.game).localeCompare(b.game) || (LEVEL_ORDER[a.level] ?? 9) - (LEVEL_ORDER[b.level] ?? 9));
+  return `<ul class="bests">${rows.map(x => `<li><span>${esc(GAME_NAMES[x.game] || x.game)} · ${esc(x.level)}</span><span>${x.rounds != null ? `<span class="muted">${Number(x.rounds)} round${x.rounds == 1 ? "" : "s"} · </span>` : ""}<b>${Number(x.best)||0}</b></span></li>`).join("")}</ul>`;
+}
+function openDialog(html){
+  $("#dlgBody").innerHTML = html;
+  if(!$("#dlg").open) $("#dlg").showModal();
+}
+async function showStudent(id){
+  openDialog('<div class="empty">Loading<i class="blink">_</i></div>');
+  try {
+    const d = await api("student", {}, {id});
+    const p = d.profile;
+    $("#dlgBody").innerHTML = `<div class="sprof">${avatarHTML(p.avatar, p.name, "")}<div><div class="kicker">Student</div><h2 style="margin:0">${esc(p.name)}</h2><span class="muted">${p.grade ? `Grade ${esc(p.grade)} ${esc(p.section||"")}` : ""}</span></div></div>
+      <div class="stats"><div class="stat"><b>${Number(d.focus.totalMinutes)||0}m</b><span>focus time</span></div><div class="stat"><b>${Number(d.focus.streak)||0}</b><span>day streak</span></div><div class="stat"><b>${Number(d.earned)||0}</b><span>achievements</span></div></div>
+      <h3 style="margin-top:18px">Game bests</h3>${bestsHTML(d.bests, false)}`;
+  } catch(err){ fail($("#dlgBody"), err); }
+}
+async function showCommunity(id){
+  openDialog('<div class="empty">Loading<i class="blink">_</i></div>');
+  try {
+    const d = await api("community", {}, {id});
+    const c = d.community;
+    $("#dlgBody").innerHTML = `<div class="kicker">${c.icon ? esc(c.icon) + " " : ""}Members</div><h2 style="margin-top:4px">${esc(c.name)}</h2>${c.description ? `<p class="muted">${esc(c.description)}</p>` : ""}
+      ${d.members.length ? `<p class="muted" style="margin-top:8px">${Number(d.weekMinutes)||0} focus minutes together this week</p><ul class="mini">${d.members.map(m => `<li data-stu="${esc(m.id)}" tabindex="0" role="button" aria-label="View ${esc(m.name)}’s profile">${avatarHTML(m.avatar, m.name)}<span class="n">${esc(m.name)}</span><span class="s">${Number(m.weekMinutes)||0}m</span></li>`).join("")}</ul>` : '<p class="muted">No members yet.</p>'}`;
+  } catch(err){ fail($("#dlgBody"), err); }
+}
+document.addEventListener("click", e => {
+  const s = e.target.closest("[data-stu]");
+  if(s && s.dataset.stu){ e.preventDefault(); return showStudent(s.dataset.stu); }
+  const c = e.target.closest("[data-com]");
+  if(c) showCommunity(c.dataset.com);
+});
+document.addEventListener("keydown", e => {
+  if(e.key !== "Enter" && e.key !== " ") return;
+  const s = e.target.closest && e.target.closest('[data-stu][role="button"]');
+  if(s && s.dataset.stu){ e.preventDefault(); showStudent(s.dataset.stu); }
+});
 
 go(location.hash.slice(1) || "home");
 </script>
