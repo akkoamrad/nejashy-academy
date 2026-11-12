@@ -14,6 +14,7 @@ export const players = pgTable("players", {
 export const games = pgTable("games", {
   id: text().primaryKey(),
   playerId: text("player_id").notNull().references(() => players.id, { onDelete: "cascade" }),
+  game: text().notNull().default("arena"),                     // "arena" | "patterns"
   level: text().notNull(),
   questions: jsonb().$type<{ q: string; ans: number }[]>().notNull(),
   current: integer().notNull().default(0),
@@ -31,12 +32,17 @@ export const scores = pgTable("scores", {
   id: serial().primaryKey(),
   playerId: text("player_id").notNull().references(() => players.id, { onDelete: "cascade" }),
   name: text().notNull(),
+  game: text().notNull().default("arena"),                     // which Game Hub game
   level: text().notNull(),
   score: integer().notNull(),
   correct: integer().notNull().default(0),
   bestStreak: integer("best_streak").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-}, t => [index("scores_level_score_idx").on(t.level, t.score)]);
+}, t => [
+  index("scores_level_score_idx").on(t.level, t.score),
+  index("scores_game_level_score_idx").on(t.game, t.level, t.score),
+  index("scores_player_idx").on(t.playerId, t.createdAt),
+]);
 
 /* =====================================================================
    Student platform tables (added for the student experience)
