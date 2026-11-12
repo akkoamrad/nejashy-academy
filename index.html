@@ -237,6 +237,90 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
 .players img,.players .av{width:72px;height:72px;font-size:1.6rem}
 .players b{font-size:.86rem;word-break:break-word}
 
+/* ===== Student platform ===== */
+.split{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+.post{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-top:14px;box-shadow:var(--shadow);animation:in .35s both}
+.post .who{display:flex;align-items:center;gap:10px}
+.post .who b{color:var(--navy)}
+.who button{padding:0;text-align:left}
+.ach{display:flex;gap:14px;align-items:center;margin:14px 0 10px;padding:14px;border-radius:14px;background:linear-gradient(135deg,var(--sky),#fff);border:1px solid var(--line)}
+.ach .ai{font-size:2rem;width:56px;height:56px;display:grid;place-items:center;background:#fff;border-radius:14px;flex:none;box-shadow:0 0 0 1px var(--line2)}
+.ach b{display:block;font-family:var(--display);color:var(--navy);font-size:1.08rem;line-height:1.25}
+.ach .val{margin-left:auto;font:800 1.5rem var(--display);color:var(--blue)}
+.acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.acts .tool.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.cmts{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.cmt{background:var(--bg);border-radius:10px;padding:6px 10px;font-size:.9rem;word-break:break-word;white-space:pre-wrap}
+.cmt b{color:var(--navy)}
+.cmt .x{float:right;color:var(--dim);font-size:.8rem}
+.cform{display:flex;gap:8px;margin-top:8px}
+.cform input{padding:.5em .8em}
+.mini{list-style:none;padding:0;margin-top:8px}
+.mini li{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.mini li .n{flex:1;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini li .s{font-weight:800;color:var(--blue)}
+.mini .av{width:28px;height:28px;font-size:.8rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:16px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+.stat b{display:block;font:800 1.7rem var(--display);color:var(--navy);line-height:1.1}
+.stat span{font-size:.8rem;color:var(--dim)}
+.chal{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.chal .ci{font-size:1.4rem}
+.chal .cb{flex:1;min-width:0}
+.chal .cb b{display:block;color:var(--navy);font-size:.95rem}
+.prog{height:8px;background:var(--sky);border-radius:99px;overflow:hidden;margin-top:6px}
+.prog i{display:block;height:100%;background:var(--blue);border-radius:99px}
+.chal.done .prog i{background:var(--green)}
+.timer{position:relative;width:250px;height:250px;margin:10px auto}
+.timer svg{width:100%;height:100%;transform:rotate(-90deg)}
+.timer .tt{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.timer .tt b{font:800 3rem var(--display);color:var(--navy);display:block;line-height:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1.5px solid var(--line2);border-radius:99px;padding:.3em .9em;font-weight:700;color:var(--navy);background:#fff}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.heat{display:grid;grid-template-rows:repeat(7,14px);grid-auto-flow:column;grid-auto-columns:14px;gap:3px;margin-top:10px;overflow-x:auto}
+.heat i{border-radius:3px;background:var(--sky)}
+.garden{display:flex;flex-wrap:wrap;gap:2px;font-size:1.4rem;margin-top:8px;line-height:1.2}
+.week{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+@media(max-width:820px){.week{grid-template-columns:1fr}}
+.day h4{font:700 .8rem var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+.day.today h4{color:var(--navy)}
+.day.today{background:var(--sky);border-radius:12px;padding:6px}
+.cls{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;padding:8px 10px;margin-bottom:6px;font-size:.86rem}
+.cls b{display:block;color:var(--navy)}
+.cls.now{border-left-color:var(--green);box-shadow:0 0 0 2px rgba(15,157,88,.2)}
+.item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.item .when{flex:none;width:64px;text-align:center;background:var(--sky);border-radius:10px;padding:4px;font-weight:700;color:var(--navy);font-size:.8rem;line-height:1.3}
+.item .when b{display:block;font:800 1.3rem var(--display)}
+.item .what{flex:1;min-width:0}
+.item .what b{color:var(--navy)}
+.item.done .what b{text-decoration:line-through;color:var(--dim)}
+.k-test{background:#fde8ea;color:var(--red)}.k-assignment{background:#fff4dc;color:var(--amber)}.k-holiday{background:#e2f6ea;color:var(--green)}
+.coms{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:14px}
+.com{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.com .ci{font-size:2rem}
+.com b{font-family:var(--display);color:var(--navy);font-size:1.15rem}
+.com .row{margin-top:auto}
+.ann{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-top:12px;box-shadow:var(--shadow)}
+.ann.pin{border-color:var(--blue2);background:linear-gradient(135deg,var(--sky),#fff)}
+.ann p{white-space:pre-wrap;margin-top:4px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0 12px}
+.form .full{grid-column:1/-1}
+select,input[type=date],input[type=time]{width:100%;font:inherit;padding:.7em .9em;border-radius:12px;border:1.5px solid var(--line2);background:#fff;color:var(--ink)}
+.tbl{width:100%;border-collapse:collapse;margin-top:12px;font-size:.88rem}
+.tbl td,.tbl th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl th{color:var(--dim);font-weight:600}
+.profhead{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.profhead img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 0 0 2px var(--blue2)}
+.code{font:800 2.4rem var(--mono);letter-spacing:.2em;color:var(--blue);text-align:center;margin:10px 0}
+#dlg{border:0;border-radius:20px;padding:26px;max-width:min(560px,92vw);width:100%;box-shadow:0 30px 80px -20px rgba(11,42,107,.5);color:var(--ink)}
+#dlg::backdrop{background:rgba(11,31,75,.45)}
+.dlgx{position:absolute;top:12px;right:12px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:.7em 1.3em;border-radius:12px;z-index:70;font-weight:600;box-shadow:var(--shadow);animation:in .3s;max-width:92vw}
+.gate{text-align:center;max-width:520px;margin:20px auto 0}
 #conf{position:fixed;inset:0;pointer-events:none;z-index:60}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}.blink{animation:none!important}}
 </style>
@@ -259,8 +343,12 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
     <button class="brand" data-v="home"><span class="logo">N</span>Nejashy Academy</button>
     <nav aria-label="Main">
       <button data-v="home">Home</button>
+      <button data-v="feed">Feed</button>
+      <button data-v="arena">Game Hub</button>
+      <button data-v="focus">Focus</button>
+      <button data-v="timetable">Timetable</button>
+      <button data-v="community">Community</button>
       <button data-v="library">Library</button>
-      <button data-v="arena">Math Arena</button>
       <button data-v="admin">Admin</button>
       <span id="chip"></span>
     </nav>
@@ -273,9 +361,9 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
       <div>
         <div class="kicker">Welcome, student</div>
         <h1>Learn together. <em>Count faster.</em></h1>
-        <p>Welcome to Nejashy Academy. Find lessons and files from your teachers in the Library, then make your player with a selfie and race your classmates in the Math Arena.</p>
+        <p>Welcome to Nejashy Academy. Make your player with a selfie, race your classmates in the Game Hub, study with the Focus Hub, keep up with your timetable and cheer on your friends’ achievements.</p>
         <div class="row">
-          <button class="btn lg" data-v="arena">Play the Math Arena</button>
+          <button class="btn lg" data-v="arena">Open the Game Hub</button>
           <button class="btn ghost lg" data-v="library">Open the Library</button>
         </div>
       </div>
@@ -287,8 +375,13 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
     <div class="cards">
       <button class="card" data-v="library"><span class="ic">📚</span><b>Library</b><span class="muted">Worksheets, videos and notes shared by your teachers.</span></button>
       <button class="card" data-v="arena"><span class="ic">📸</span><b>Your player</b><span class="muted">Take a selfie or upload a photo once. It becomes your picture every time you play.</span></button>
-      <button class="card" data-v="arena"><span class="ic">🏆</span><b>Leaderboard</b><span class="muted">Answer fast, build streaks and climb to the top three.</span></button>
+      <button class="card" data-v="arena"><span class="ic">🏆</span><b>Game Hub</b><span class="muted">Math Arena and Pattern Pro. Answer fast, build streaks and climb the leaderboard.</span></button>
+      <button class="card" data-v="focus"><span class="ic">🎯</span><b>Focus Hub</b><span class="muted">Timed study sessions that grow your garden and your streak.</span></button>
+      <button class="card" data-v="timetable"><span class="ic">🗓️</span><b>Timetable</b><span class="muted">Your classes, tests, assignments and school dates in one place.</span></button>
+      <button class="card" data-v="feed"><span class="ic">🎉</span><b>Achievement feed</b><span class="muted">Share what you earned and cheer on your classmates.</span></button>
+      <button class="card" data-v="community"><span class="ic">👥</span><b>Community</b><span class="muted">Announcements, your class and school clubs.</span></button>
     </div>
+    <div id="homeNews"></div>
   </section>
 
   <section class="view" id="library" hidden>
@@ -302,9 +395,9 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
   </section>
 
   <section class="view" id="arena" hidden>
-    <div class="kicker">10 questions · 15 seconds each</div>
-    <h2>Math Arena</h2>
-    <p class="muted">Faster answers and streaks score more points.</p>
+    <div class="kicker">10 questions per round</div>
+    <h2>Game Hub</h2>
+    <p class="muted">Faster answers and streaks score more points. Your photo is also how you sign in to the rest of the academy.</p>
 
     <div class="arena">
       <div>
@@ -364,6 +457,17 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
           </div>
         </div>
 
+        <!-- This name has a photo, but this device isn't linked to it -->
+        <div class="panel" id="stepLink" hidden>
+          <div class="steps"><span class="done">1 · Name</span><span class="on">2 · Link device</span><span>3 · Play</span></div>
+          <div class="player">
+            <img id="lkImg" alt="">
+            <div><span class="muted">This name is taken by</span><b id="lkName"></b></div>
+          </div>
+          <div id="lkBody"></div>
+          <div class="links" style="margin-top:14px"><button class="linkbtn" id="lkBack">Use a different name</button></div>
+        </div>
+
         <!-- Step 3: ready -->
         <div class="panel" id="stepReady" hidden>
           <div class="steps"><span class="done">1 · Name</span><span class="done">2 · Photo</span><span class="on">3 · Play</span></div>
@@ -377,6 +481,11 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
                 <button class="linkbtn" id="notMe">Not you? Change name</button>
               </div>
             </div>
+          </div>
+          <label>Choose a game</label>
+          <div class="lv" id="gm" style="grid-template-columns:1fr 1fr">
+            <button data-g="arena" class="on">🧮 Math Arena<small>quick arithmetic · 15s</small></button>
+            <button data-g="patterns">🧩 Pattern Pro<small>find the next number · 20s</small></button>
           </div>
           <label>Choose a level</label>
           <div class="lv" id="lv">
@@ -407,13 +516,18 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
           <h3 id="rt" style="text-align:center;font-size:1.4rem"></h3>
           <div class="big" id="rs">0</div>
           <p class="muted" id="rd" style="text-align:center"></p>
+          <div id="rAch"></div>
           <div class="row" style="justify-content:center;margin-top:18px"><button class="btn" id="again">Play again</button></div>
         </div>
       </div>
 
       <div class="panel">
         <h3>Top players</h3>
-        <div class="flt" id="flt">
+        <div class="flt" id="gflt">
+          <button data-gb="arena" class="on">Math Arena</button>
+          <button data-gb="patterns">Pattern Pro</button>
+        </div>
+        <div class="flt" id="flt" style="margin-top:0">
           <button data-b="all" class="on">All</button>
           <button data-b="easy">Easy</button>
           <button data-b="medium">Medium</button>
@@ -425,12 +539,50 @@ label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
     </div>
   </section>
 
+  <section class="view" id="feed" hidden>
+    <div class="kicker">Earned, never typed</div>
+    <h2>Achievement feed</h2>
+    <p class="muted">Every card here was earned on Nejashy Academy and shared by the student. Cheer them on!</p>
+    <div class="split">
+      <div>
+        <div class="flt" id="feedFlt"></div>
+        <div id="feedList"></div>
+      </div>
+      <aside id="feedSide"></aside>
+    </div>
+  </section>
+
+  <section class="view" id="focus" hidden>
+    <div class="kicker">Focus Hub</div>
+    <h2>Study with focus</h2>
+    <p class="muted">Pick a length and a subject, then keep this page open. Sessions only count when the full time has passed.</p>
+    <div id="focusBody"></div>
+  </section>
+
+  <section class="view" id="timetable" hidden>
+    <div class="kicker">Your week</div>
+    <h2>Timetable</h2>
+    <div id="ttBody"></div>
+  </section>
+
+  <section class="view" id="community" hidden>
+    <div class="kicker">School life</div>
+    <h2>Community</h2>
+    <div id="comBody"></div>
+  </section>
+
+  <section class="view" id="profile" hidden>
+    <div id="profBody"></div>
+  </section>
+
   <section class="view" id="admin" hidden>
     <div id="adminBody"></div>
   </section>
 </main>
 <footer>Nejashy Academy · learn together, count faster</footer>
 <canvas id="conf" aria-hidden="true"></canvas>
+<dialog id="dlg"><div id="dlgBody"></div><button class="btn sm ghost dlgx" id="dlgX" aria-label="Close">✕</button></dialog>
+<div id="toast" role="status" hidden></div>
 
 <script>
 /* ===== API CONNECTION ===== */
@@ -438,9 +590,12 @@ const API = "/.netlify/functions/api";
 
 async function api(action, options = {}, params = {}) {
   const qs = new URLSearchParams({action, ...params});
+  // Signed-in students prove who they are with the private key saved on this device.
+  const headers = {...(options.headers || {})};
+  if(me && keys.get(me.id)){ headers["X-Student-Id"] = me.id; headers["X-Student-Key"] = keys.get(me.id); }
   let response;
   try {
-    response = await fetch(`${API}?${qs}`, {credentials:"same-origin", ...options});
+    response = await fetch(`${API}?${qs}`, {credentials:"same-origin", ...options, headers});
   } catch {
     throw new Error("Can't reach the server. Check your internet connection.");
   }
@@ -457,7 +612,7 @@ async function api(action, options = {}, params = {}) {
   return data;
 }
 
-const post = (action, body) => api(action, {
+const post = (action, body = {}) => api(action, {
   method:"POST",
   headers:{"Content-Type":"application/json"},
   body:JSON.stringify(body)
@@ -548,13 +703,22 @@ async function termType(){
 /* ===== Navigation ===== */
 let current = "home";
 function go(v){
+  if(v !== "focus") clearInterval(focusTimer);
   if(current === "arena" && v !== "arena") leaveArena();
+  if(!document.getElementById(v)) v = "home";
   current = v;
+  if(location.hash.slice(1) !== v) history.replaceState(null, "", v === "home" ? location.pathname : "#" + v);
   document.querySelectorAll(".view").forEach(s => s.hidden = s.id !== v);
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
   if(v === "library") renderLib($("#libList"), false);
   if(v === "arena") renderBoard();
   if(v === "admin") renderAdmin();
+  if(v === "home") renderHomeNews();
+  if(v === "feed") renderFeed();
+  if(v === "focus") renderFocus();
+  if(v === "timetable") renderTimetable();
+  if(v === "community") renderCommunity();
+  if(v === "profile") renderProfile();
   scrollTo(0,0);
 }
 
@@ -625,7 +789,8 @@ document.addEventListener("click", async e => {
 });
 
 /* ===== Player profile ===== */
-let me = null;  // {id, name, avatar, hasAvatar}
+let me = null;  // {id, name, avatar, hasAvatar, grade, section} — only set when this device holds the player's key
+let pendingView = null; // where to go after signing in
 
 // Each device remembers a private key for the players it created, so only that
 // device can change the player's photo later.
@@ -634,16 +799,17 @@ const keys = {
   get(id){ return this.all()[id] || ""; },
   set(id, key){ const k = this.all(); k[id] = key; localStorage.setItem("academy_keys", JSON.stringify(k)); }
 };
+const signedIn = () => !!(me && keys.get(me.id));
 
 function showStep(id){
-  for(const s of ["stepName","stepSelfie","stepReady","game","result"]) $("#"+s).hidden = s !== id;
+  for(const s of ["stepName","stepSelfie","stepLink","stepReady","game","result"]) $("#"+s).hidden = s !== id;
 }
 
 function setMe(p){
-  me = p && p.hasAvatar ? p : null;
+  me = p && p.hasAvatar && keys.get(p.id) ? p : null;
   if(me){
     localStorage.setItem("academy_name", me.name);
-    $("#chip").innerHTML = `<button class="chip" data-v="arena">${avatarHTML(me.avatar, me.name)}${esc(me.name)}</button>`;
+    $("#chip").innerHTML = `<button class="chip" data-v="profile" title="My profile">${avatarHTML(me.avatar, me.name)}${esc(me.name)}</button>`;
   } else {
     $("#chip").innerHTML = "";
   }
@@ -656,7 +822,43 @@ function showReady(hello){
   $("#changePhoto").hidden = !keys.get(me.id);
   $("#startErr").textContent = "";
   showStep("stepReady");
+  // Came here to sign in for another page? Go back there.
+  if(pendingView && current === "arena"){ const v = pendingView; pendingView = null; go(v); }
 }
+
+// The name already has a photo, but this device doesn't hold its key.
+function showLink(p){
+  $("#lkImg").src = p.avatar;
+  $("#lkName").textContent = p.name;
+  $("#lkBody").innerHTML = p.canLink ? `
+    <p style="margin-top:14px">Is this you? Link this device with a code from a device you already use.</p>
+    <ol class="muted" style="margin:8px 0 0 1.2em;font-size:.92rem">
+      <li>On your other device, open <b>My profile</b> and press <b>Link a new device</b>.</li>
+      <li>Type the 6-digit code here.</li>
+    </ol>
+    <form id="lkForm" class="namerow" style="margin-top:14px">
+      <input type="text" id="lkCode" inputmode="numeric" maxlength="7" placeholder="123456" aria-label="Link code" autocomplete="one-time-code">
+      <button class="btn">Link</button>
+    </form>
+    <div class="fb bad" id="lkErr" role="alert"></div>
+    <p class="muted" style="font-size:.86rem">Lost your other device? Ask a teacher to reset your photo, then take a new selfie here.</p>`
+    : `<p style="margin-top:14px">This player was made before devices could be linked. Ask a teacher to reset the photo, then take a new selfie here. Your scores are kept.</p>`;
+  showStep("stepLink");
+  const f = $("#lkForm");
+  if(f) f.onsubmit = async e => {
+    e.preventDefault();
+    const err = $("#lkErr");
+    err.textContent = "";
+    try {
+      const res = await post("linkDevice", {name:p.name, code:$("#lkCode").value});
+      keys.set(res.profile.id, res.key);
+      setMe(res.profile);
+      toast("Device linked. Welcome back!");
+      showReady("Device linked!");
+    } catch(error) { err.textContent = error.message; }
+  };
+}
+$("#lkBack").onclick = () => { $("#pname").value = ""; showStep("stepName"); $("#pname").focus(); };
 
 $("#nameForm").onsubmit = async e => {
   e.preventDefault();
@@ -676,8 +878,8 @@ $("#nameForm").onsubmit = async e => {
   try {
     const res = await api("profile", {}, {name});
     if(res.exists && res.profile.hasAvatar){
-      setMe(res.profile);
-      showReady();
+      if(keys.get(res.profile.id)){ setMe(res.profile); showReady(); }
+      else showLink(res.profile);
     } else {
       openSelfie(res.exists ? "reset" : "new", res.exists ? res.profile.name : name);
     }
@@ -943,8 +1145,9 @@ const Studio = {
     } catch(err) {
       $("#scan").hidden = true;
       if(err.status === 409 && err.data?.profile){
-        setMe(err.data.profile);
-        showReady();
+        $("#scan").hidden = true;
+        if(keys.get(err.data.profile.id)){ setMe(err.data.profile); showReady(); }
+        else showLink(err.data.profile);
         return;
       }
       this.msg((err.data?.rejected ? "Not accepted: " : "") + err.message, "bad");
@@ -1009,9 +1212,10 @@ $("#camCtl").onclick = e => {
   $("#pname").value = saved;
   try {
     const res = await api("profile", {}, {name:saved});
-    if(res.exists && res.profile.hasAvatar){
+    if(res.exists && res.profile.hasAvatar && keys.get(res.profile.id)){
       setMe(res.profile);
       if(!$("#stepName").hidden) showReady();
+      if(["focus","timetable","profile","feed","community"].includes(current)) go(current);
     }
   } catch {}
 })();
@@ -1180,8 +1384,25 @@ document.addEventListener("click", async e => {
    The server picks the questions, times every answer and calculates the score,
    so the leaderboard only shows scores that were really earned. */
 let level = "easy";
+let gameKind = "arena";
 let G = null;
 let boardLevel = "all";
+let boardGame = "arena";
+const GAME_NAME = {arena:"Math Arena", patterns:"Pattern Pro"};
+
+$("#gm").onclick = e => {
+  const b = e.target.closest("button");
+  if(!b) return;
+  gameKind = b.dataset.g;
+  document.querySelectorAll("#gm button").forEach(x => x.classList.toggle("on", x === b));
+};
+$("#gflt").onclick = e => {
+  const b = e.target.closest("button");
+  if(!b) return;
+  boardGame = b.dataset.gb;
+  document.querySelectorAll("#gflt button").forEach(x => x.classList.toggle("on", x === b));
+  renderBoard();
+};
 
 $("#lv").onclick = e => {
   const b = e.target.closest("button");
@@ -1219,16 +1440,17 @@ function endRound(){
 }
 
 $("#start").onclick = async () => {
-  if(!me){ showStep("stepName"); return; }
+  if(!signedIn()){ showStep("stepName"); return; }
   const btn = $("#start");
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span> Getting ready';
   $("#startErr").textContent = "";
   try {
-    const res = await post("start", {name:me.name, level});
-    G = {id:res.gameId, total:res.total, timeMs:res.timeMs, level, name:me.name, index:0,
+    const res = await post("start", {game:gameKind, level});
+    G = {id:res.gameId, game:res.game, total:res.total, timeMs:res.timeMs, level, name:me.name, index:0,
          score:0, streak:0, marks:[], raf:0, lock:false, over:false};
     $("#gImg").src = me.avatar;
+    $("#q").style.fontSize = res.game === "patterns" ? "clamp(1.8rem,8vw,3.6rem)" : "";
     showStep("game");
     show(res.index, res.question);
   } catch(err) {
@@ -1328,11 +1550,11 @@ async function answer(v){
   drawDots();
   game.nextTimer = setTimeout(() => {
     if(res.next) show(res.next.index, res.next.question);
-    else finish(res.result);
+    else finish(res.result, res.achievements || []);
   }, 1100);
 }
 
-async function finish(result){
+async function finish(result, earned = []){
   G.over = true;
   showStep("result");
   $("#rImg").src = me.avatar;
@@ -1348,7 +1570,10 @@ async function finish(result){
   })(t0);
 
   if(result.correct >= 6 && !reduce) confetti();
-  $("#rd").textContent = `${result.correct} of ${result.total} correct · best streak ${result.bestStreak} · rank #${result.rank} in ${result.level}`;
+  $("#rd").textContent = `${GAME_NAME[result.game] || ""} · ${result.correct} of ${result.total} correct · best streak ${result.bestStreak} · rank #${result.rank} in ${result.level}`;
+  $("#rAch").innerHTML = earnedHTML(earned);
+  boardGame = result.game;
+  document.querySelectorAll("#gflt button").forEach(x => x.classList.toggle("on", x.dataset.gb === boardGame));
   setBoard(result.level);
 }
 
@@ -1358,8 +1583,8 @@ async function renderBoard(){
   pod.innerHTML = "";
 
   try {
-    const data = await api("scores", {}, {level:boardLevel});
-    const mine = x => me && x.name.toLowerCase() === me.name.toLowerCase();
+    const data = await api("scores", {}, {game:boardGame, level:boardLevel});
+    const mine = x => me && x.playerId === me.id;
 
     if(!data.length){
       ol.innerHTML = '<li style="border:0" class="muted">No scores yet. Be the first!</li>';
@@ -1412,7 +1637,165 @@ function confetti(){
   })(t0);
 }
 
-go("home");
+/* ===== Student platform pages ===== */
+function toast(t){ const el=$("#toast"); el.textContent=t; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,3000); }
+function earnedHTML(list){
+  if(!list || !list.length) return "";
+  return `<div class="panel" style="text-align:left"><h3>You earned something!</h3>` + list.map(a => `<div class="ach"><span class="ai">${esc(a.icon)}</span><div><b>${esc(a.title)}</b><span class="muted">${esc(a.detail)}</span></div><button class="btn sm" data-share="${a.id}">Share</button></div>`).join("") + `</div>`;
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-share]");
+  if(!b) return;
+  try { await post("share", {id:+b.dataset.share}); b.disabled = true; b.textContent = "Shared"; toast("Shared to the feed!"); }
+  catch(err){ toast(err.message); }
+});
+function gate(box, what){
+  if(signedIn()) return false;
+  box.innerHTML = `<div class="panel gate"><h3>Sign in to see your ${what}</h3><p class="muted">Type your name and take your selfie in the Game Hub first.</p><button class="btn" style="margin-top:12px" id="gateGo">Sign in</button></div>`;
+  $("#gateGo").onclick = () => { pendingView = current; go("arena"); };
+  return true;
+}
+const fail = (box, err) => box.innerHTML = `<div class="empty bad">${esc(err.message)}</div>`;
+
+async function renderHomeNews(){
+  const box = $("#homeNews");
+  try {
+    const list = await api("announcements");
+    box.innerHTML = list.length ? `<h3 style="margin-top:40px">Announcements</h3>` + list.slice(0,3).map(a => `<div class="ann ${a.pinned?"pin":""}"><b>${a.pinned?"📌 ":""}${esc(a.title)}</b><p>${esc(a.body)}</p></div>`).join("") : "";
+  } catch { box.innerHTML = ""; }
+}
+
+async function renderFeed(){
+  const box = $("#feedList");
+  box.innerHTML = '<div class="skel"></div>';
+  try {
+    const [{items}, h] = await Promise.all([api("feed"), api("highlights")]);
+    box.innerHTML = items.length ? items.map(a => `<article class="post">
+      <div class="who">${avatarHTML(a.student.avatar, a.student.name)}<b>${esc(a.student.name)}</b><span class="muted" style="font-size:.8rem">${new Date(a.sharedAt).toLocaleDateString()}</span></div>
+      <div class="ach"><span class="ai">${esc(a.icon)}</span><div><b>${esc(a.title)}</b><span class="muted">${esc(a.detail)}</span></div>${a.value!=null?`<span class="val">${a.value}</span>`:""}</div>
+      <div class="acts"><button class="tool ${a.cheered?"on":""}" data-cheer="${a.id}" data-on="${a.cheered?0:1}">👏 ${a.cheers}</button><span class="muted">💬 ${a.comments}</span></div>
+      <div class="cmts">${a.preview.map(c => `<div class="cmt"><b>${esc(c.name)}</b> ${esc(c.body)}</div>`).join("")}</div>
+      ${signedIn()?`<form class="cform" data-cform="${a.id}"><input type="text" maxlength="280" placeholder="Say something nice"><button class="btn sm">Send</button></form>`:""}
+    </article>`).join("") : '<div class="empty">Nothing shared yet. Earn an achievement in the Game Hub or Focus Hub and share it!</div>';
+    const mini = (l, f) => l.length ? `<ul class="mini">${l.map(x => `<li>${avatarHTML(x.avatar,x.name)}<span class="n">${esc(x.name)}</span><span class="s">${f(x)}</span></li>`).join("")}</ul>` : '<p class="muted">No one yet.</p>';
+    $("#feedSide").innerHTML = `<div class="panel" style="margin-top:0"><h3>This week</h3><p class="muted">${h.focusingNow} focusing right now</p><b>Top focus</b>${mini(h.focusTop,x=>x.minutes+"m")}<b style="display:block;margin-top:12px">Top scores</b>${mini(h.gameTop,x=>x.score)}</div>`;
+  } catch(err){ fail(box, err); }
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-cheer]");
+  if(!b) return;
+  if(!signedIn()) return toast("Sign in to cheer.");
+  try { await post("cheer", {id:+b.dataset.cheer, on:b.dataset.on === "1"}); renderFeed(); } catch(err){ toast(err.message); }
+});
+document.addEventListener("submit", async e => {
+  const f = e.target.closest("[data-cform]");
+  if(!f) return;
+  e.preventDefault();
+  try { await post("comment", {id:+f.dataset.cform, body:f.querySelector("input").value}); renderFeed(); } catch(err){ toast(err.message); }
+});
+
+let focusTimer = 0, focusLen = 25;
+async function renderFocus(){
+  const box = $("#focusBody");
+  clearInterval(focusTimer);
+  if(gate(box, "Focus Hub")) return;
+  try {
+    const st = await api("focusState");
+    const skew = Date.now() - st.serverNow;
+    const s = st.stats;
+    let html = `<div class="stats"><div class="stat"><b>${s.todayMinutes}m</b><span>today</span></div><div class="stat"><b>${s.totalMinutes}m</b><span>total</span></div><div class="stat"><b>${s.streak}</b><span>day streak</span></div><div class="stat"><b>${st.focusingNow}</b><span>focusing now</span></div></div>`;
+    if(st.active){
+      html += `<div class="panel" style="text-align:center"><h3>${esc(st.active.label || "Focus session")}</h3><div class="big" id="fLeft"></div><button class="btn ghost" id="fStop" style="margin-top:12px">Stop</button></div>`;
+    } else {
+      html += `<div class="panel"><label style="margin-top:0">Length (minutes)</label><div class="chips" id="fLens">${st.lengths.map(l => `<button data-len="${l}" class="${l===focusLen?"on":""}">${l}</button>`).join("")}</div>
+        <label for="fLabel">Subject (optional)</label><input type="text" id="fLabel" maxlength="40" placeholder="Maths homework">
+        <button class="btn lg" id="fStart" style="margin-top:16px">Start focusing</button></div>`;
+    }
+    html += `<div class="panel"><h3>Weekly challenges</h3>${st.challenges.challenges.map(c => `<div class="chal ${c.done?"done":""}"><span class="ci">${c.icon}</span><div class="cb"><b>${esc(c.title)}</b><span class="muted" style="font-size:.85rem">${c.progress}/${c.goal} ${c.unit}</span><div class="prog"><i style="width:${100*c.progress/c.goal}%"></i></div></div></div>`).join("")}</div>`;
+    html += `<div class="panel"><h3>Your garden</h3><div class="garden">${st.garden.map(m => m>=60?"🌳":m>=30?"🌿":"🌱").join("") || '<span class="muted" style="font-size:1rem">Finish a session to plant your first seed.</span>'}</div></div>`;
+    box.innerHTML = html;
+    if(st.active){
+      const end = Date.parse(st.active.endsAt) + skew;
+      const upd = async () => {
+        const left = end - Date.now();
+        if(left <= 0){
+          clearInterval(focusTimer);
+          try { const r = await post("focusComplete", {id:st.active.id}); toast(`Session complete: ${r.minutes} minutes!`); renderFocus(); if(r.achievements.length){ $("#dlgBody").innerHTML = earnedHTML(r.achievements); $("#dlg").showModal(); } }
+          catch(err){ toast(err.message); renderFocus(); }
+          return;
+        }
+        const m = Math.floor(left/60000), sec = Math.floor(left/1000)%60;
+        $("#fLeft").textContent = `${m}:${String(sec).padStart(2,"0")}`;
+      };
+      upd(); focusTimer = setInterval(upd, 1000);
+      $("#fStop").onclick = async () => { if(!confirm("Stop this session? It won't count.")) return; await post("focusStop", {id:st.active.id}); renderFocus(); };
+    } else {
+      $("#fLens").onclick = e => { const b = e.target.closest("[data-len]"); if(!b) return; focusLen = +b.dataset.len; document.querySelectorAll("#fLens button").forEach(x => x.classList.toggle("on", x===b)); };
+      $("#fStart").onclick = async () => { try { await post("focusStart", {minutes:focusLen, label:$("#fLabel").value}); renderFocus(); } catch(err){ toast(err.message); } };
+    }
+  } catch(err){ fail(box, err); }
+}
+
+async function renderTimetable(){
+  const box = $("#ttBody");
+  if(gate(box, "timetable")) return;
+  try {
+    const t = await api("timetable");
+    const days = ["Mon","Tue","Wed","Thu","Fri"];
+    const dow = (new Date().getDay() + 6) % 7 + 1;
+    let html = t.grade ? `<p class="muted">Grade ${esc(t.grade)}${t.section?" "+esc(t.section):""}</p>` : `<p class="muted">Set your grade in <button class="linkbtn" data-v="profile">My profile</button> to see your class timetable.</p>`;
+    html += `<div class="week">${days.map((d,i) => `<div class="day ${dow===i+1?"today":""}"><h4>${d}</h4>${t.classes.filter(c => c.day===i+1).map(c => `<div class="cls"><b>${esc(c.subject)}</b>${esc(c.startTime)}–${esc(c.endTime)} ${esc(c.room)}</div>`).join("") || '<span class="muted" style="font-size:.85rem">No classes</span>'}</div>`).join("")}</div>`;
+    const up = [...t.items.map(i => ({...i, src:"school"})), ...t.personal.map(p => ({...p, kind:"mine", src:"mine"}))]
+      .filter(i => (i.endDate || i.date) >= t.today).sort((a,b) => a.date.localeCompare(b.date));
+    html += `<div class="grid2"><div class="panel"><h3>Coming up</h3>${up.map(i => `<div class="item ${i.done?"done":""}"><div class="when k-${i.kind}"><b>${+i.date.slice(8)}</b>${new Date(i.date+"T00:00").toLocaleString(undefined,{month:"short"})}</div><div class="what"><b>${esc(i.title)}</b> <span class="tag">${i.kind}</span><div class="muted" style="font-size:.85rem">${esc(i.subject||"")} ${esc(i.time||"")} ${esc(i.details||i.note||"")}</div></div>
+      ${i.kind==="assignment"?`<button class="btn sm ghost" data-done="${i.id}" data-to="${i.done?0:1}">${i.done?"Undo":"Done"}</button>`:""}${i.src==="mine"?`<button class="btn sm ghost" data-pdel="${i.id}">✕</button>`:""}</div>`).join("") || '<p class="muted">Nothing coming up.</p>'}</div>
+      <div class="panel"><h3>Add to my calendar</h3><form id="pf" class="form"><div class="full"><label>Title</label><input type="text" id="pt" maxlength="80" required></div><div><label>Date</label><input type="date" id="pd" required></div><div><label>Time</label><input type="time" id="ptm"></div><div class="full"><button class="btn" style="margin-top:14px">Add</button></div></form></div></div>`;
+    box.innerHTML = html;
+    $("#pf").onsubmit = async e => { e.preventDefault(); try { await post("addPersonal", {title:$("#pt").value, date:$("#pd").value, time:$("#ptm").value}); renderTimetable(); } catch(err){ toast(err.message); } };
+  } catch(err){ fail(box, err); }
+}
+document.addEventListener("click", async e => {
+  const d = e.target.closest("[data-done]"), x = e.target.closest("[data-pdel]");
+  try {
+    if(d){ await post("toggleAssignment", {id:+d.dataset.done, done:d.dataset.to==="1"}); renderTimetable(); }
+    if(x){ await post("deletePersonal", {id:+x.dataset.pdel}); renderTimetable(); }
+  } catch(err){ toast(err.message); }
+});
+
+async function renderCommunity(){
+  const box = $("#comBody");
+  try {
+    const [ann, c] = await Promise.all([api("announcements"), api("communities")]);
+    box.innerHTML = `<h3 style="margin-top:20px">Announcements</h3>${ann.map(a => `<div class="ann ${a.pinned?"pin":""}"><b>${a.pinned?"📌 ":""}${esc(a.title)}</b><p>${esc(a.body)}</p><span class="muted" style="font-size:.8rem">${new Date(a.createdAt).toLocaleDateString()}</span></div>`).join("") || '<p class="muted">No announcements.</p>'}
+      <h3 style="margin-top:30px">Clubs and groups</h3><div class="coms">${c.myClass?`<div class="com"><span class="ci">🏫</span><b>Grade ${esc(c.myClass.grade)}${c.myClass.section?" "+esc(c.myClass.section):""}</b><span class="muted">Your class · ${c.myClass.members} students</span></div>`:""}
+      ${c.communities.map(x => `<div class="com"><span class="ci">${esc(x.icon)}</span><b>${esc(x.name)}</b><span class="muted">${esc(x.description)}</span><span class="muted" style="font-size:.85rem">${x.members} members</span><div class="row">${signedIn()?`<button class="btn sm ${x.joined?"ghost":""}" data-join="${x.id}" data-to="${x.joined?0:1}">${x.joined?"Leave":"Join"}</button>`:""}</div></div>`).join("")}</div>
+      ${!c.communities.length && !c.myClass ? '<p class="muted">No groups yet.</p>' : ""}`;
+  } catch(err){ fail(box, err); }
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-join]");
+  if(!b) return;
+  try { await post("joinCommunity", {id:+b.dataset.join, join:b.dataset.to==="1"}); renderCommunity(); } catch(err){ toast(err.message); }
+});
+
+async function renderProfile(){
+  const box = $("#profBody");
+  if(gate(box, "profile")) return;
+  try {
+    const d = await api("me");
+    const p = d.profile;
+    box.innerHTML = `<div class="profhead">${avatarHTML(p.avatar,p.name,"")}<div><div class="kicker">My profile</div><h2>${esc(p.name)}</h2><span class="muted">${p.grade?`Grade ${esc(p.grade)} ${esc(p.section||"")}`:"No grade set"}</span></div></div>
+      <div class="stats"><div class="stat"><b>${d.focus.totalMinutes}m</b><span>focus time</span></div><div class="stat"><b>${d.focus.streak}</b><span>day streak</span></div><div class="stat"><b>${d.achievements.length}</b><span>achievements</span></div></div>
+      <div class="grid2"><div class="panel"><h3>Achievements</h3>${d.achievements.map(a => `<div class="ach"><span class="ai">${esc(a.icon)}</span><div><b>${esc(a.title)}</b><span class="muted">${esc(a.detail)}</span></div>${a.shared?'<span class="tag">shared</span>':`<button class="btn sm" data-share="${a.id}">Share</button>`}</div>`).join("") || '<p class="muted">Play a round or finish a focus session to earn one.</p>'}</div>
+      <div><div class="panel" style="margin-top:20px"><h3>Account</h3><form id="df" class="form"><div><label>Grade</label><input type="text" id="dg" maxlength="12" value="${esc(p.grade||"")}"></div><div><label>Section</label><input type="text" id="ds" maxlength="12" value="${esc(p.section||"")}"></div><div class="full"><button class="btn" style="margin-top:14px">Save</button></div></form></div>
+      <div class="panel"><h3>Link a new device</h3><p class="muted">Get a code to sign in on another phone or computer.</p><div id="lcOut"></div><button class="btn ghost" id="lcGo" style="margin-top:10px">Link a new device</button></div></div></div>`;
+    $("#df").onsubmit = async e => { e.preventDefault(); try { const r = await post("saveDetails", {grade:$("#dg").value, section:$("#ds").value}); setMe({...me, ...r.profile}); toast("Saved."); renderProfile(); } catch(err){ toast(err.message); } };
+    $("#lcGo").onclick = async () => { try { const r = await post("linkCode"); $("#lcOut").innerHTML = `<div class="code">${esc(r.code)}</div><p class="muted" style="text-align:center">Valid for 10 minutes.</p>`; } catch(err){ toast(err.message); } };
+  } catch(err){ fail(box, err); }
+}
+$("#dlgX").onclick = () => $("#dlg").close();
+
+go(location.hash.slice(1) || "home");
 </script>
 </body>
 </html>
